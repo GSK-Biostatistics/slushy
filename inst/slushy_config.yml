@@ -1,0 +1,12 @@
+default:
+  config_name: public
+
+  public:
+    rspm_url: "https://packagemanager.rstudio.com/cran"
+    environment:
+      RENV_CONFIG_USE_CACHE: TRUE
+      RENV_CONFIG_SANDBOX_ENABLED: TRUE
+    pkgs: NULL
+    startup:
+      pre: NULL
+      post: NULL

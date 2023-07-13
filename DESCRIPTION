@@ -1,0 +1,36 @@
+Package: slushy
+Type: Package
+Title: Create and manage controlled R environments
+Version: 0.1.0
+Authors@R:
+    c(person(given = "Becca",
+             family = "Krouse",
+             role = c("aut", "cre"),
+             email = "becca.z.krouse@gsk.com"),
+      person(given = "Ellis",
+             family = "Hughes",
+             role = c("aut"),
+             email = "ellis.h.hughes@gsk.com"),
+      person("GlaxoSmithKline Research & Development Limited", role = c("cph", "fnd"))       
+    )
+Description: A wrapper built on {renv} to mirror a controlled R environment through CRAN snapshots and an agreed set of packages. Contains utilities to create the slushy environment, add new packages, and update the environment, as well as the ability for other team members to easily sync to the lockfile.
+License: Apache License (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Imports: 
+    cli,
+    config,
+    desc,
+    dplyr,
+    jsonlite,
+    magrittr,
+    purrr,
+    renv (>= 0.17.1),
+    rlang,
+    rprojroot,
+    rstudioapi,
+    yaml
+Suggests: 
+    knitr,
+    rmarkdown

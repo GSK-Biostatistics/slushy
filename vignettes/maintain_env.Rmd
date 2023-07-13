@@ -1,0 +1,65 @@
+---
+title: "Initialize and Maintain of {slushy} environments"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Initialize and Maintain of {slushy} environments}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+ 
+ 
+
+## Setting up the environment
+
+Please perform the following steps to set up your slushy environment.
+
+  1. Install {slushy} from github:
+
+```r
+devtools::install_github("GSK-Biostatistics/slushy")
+```
+
+  2. Create a `slushy_config.yml` inside your project directory and customize as needed:
+
+``` 
+new_config()  
+```
+  
+  3. Initialize your slushy environment by entering the following code in your RStudio console. By default, this will use the "default" config in your new `slushy_config.yml` file and today's date for the snapshot.  
+  **[NOTE: This will create some extra files and folders for use by slushy (.Rprofile, DESCRIPTION, renv/, renv.lock)]**
+  
+```r
+library(slushy)
+slushy_init()
+```
+
+  4. [Optional] Add any extra packages needed. **[NOTE: You will receive a message of caution, as these packages were not defined in the config file as agreed-upon packages.]**
+
+```r
+slushy_add("packagename")
+```
+
+  5. [Optional] Remove a package if needed.
+  
+```r
+slushy_drop("packagename")
+```
+
+## Updating the environment
+
+In the future, you can easily update the environment forward or backward.
+  
+```r
+# default: use latest date
+slushy_update()
+
+# revert to a prior date
+slushy_update(date = "2023-01-01")
+```

@@ -1,0 +1,37 @@
+---
+title: "Daily use of {slushy} environments"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Daily use of {slushy} environments}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+All members of a project that is using a {slushy} environment should strive to keep in sync with the environment that has been defined in the lock file. Below are steps for team members to ensure they are in sync with the current environment. 
+
+## Inheriting the {slushy} environment
+
+  1. If the {slushy} environment has recently been initialized or updated, you will first need to check that your local copy of the project contains the most recent {slushy} infrastructure. 
+  **[NOTE: If doing this for the first time, you will see a set of new files/folders. These should not be edited. However, it may be helpful to know that `renv.lock` stores information about the project's environment]**
+
+  2. Restart your R session. The first time you do this, several packages will automatically be installed for {slushy} to work. Next, you will receive a message(s) about the state of your project. This is made possible by a function called `slushy_status()`, which runs at the start of every R session.
+      + If **no issues** are detected, you will simply receive a message that says "Local environment is in sync with the lockfile".  
+      + If **any issues** are detected, you will receive a different message. Please see the next section for instructions on how to resolve potential issues.
+
+## Resolving issues
+
+If any issues were detected at the start of your R session, please proceed with the recommended action(s) below.
+
+
+Detected Issue  | Recommended Action
+------------- | -------------
+Your local environment is out of sync with your team.   | Use `slushy_sync` to update your packages according to the lock file.
+An R program is using a package that is not documented in the lock file. | Work with your project team to investigate whether the package should be removed from the code or added to the project as an agreed upon package (via `slushy_add()`)
+

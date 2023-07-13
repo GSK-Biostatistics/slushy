@@ -1,0 +1,149 @@
+
+
+#' Add environment variable settings to text for .Rprofile
+#' @param rprofile_text Current text for .Rprofile
+#' @param env_settings List of environment variables to be set
+#' @importFrom purrr reduce imap
+#' @importFrom rlang is_empty
+#' @noRd
+add_slushy_rprofile_env_code <- function(rprofile_text, env_settings){
+
+  env_settings_to_text <- imap(env_settings, function(x,y) {
+    paste0("Sys.setenv(", y, " = ", x, ")")
+  })
+
+  if (!is_empty(env_settings_to_text)){
+    rprofile_text <- c(
+      rprofile_text,
+      "## Set slushy global options and environment variables",
+      reduce(env_settings_to_text, c)
+    )
+  }
+
+  return(rprofile_text)
+}
+
+#' Add check to restore the lockfile version of slushy to text for .Rprofile
+#' @param rprofile_text Current text for .Rprofile
+#' @noRd
+add_slushy_rprofile_install_code <- function(rprofile_text){
+
+  c(rprofile_text,
+    "## Code to install correct version of slushy if needed",
+    "renv::restore(packages = \"slushy\", prompt = FALSE)"
+  )
+}
+
+
+#' Make activate.R quiet to streamline startup messages for slushy user in text
+#' for .Rprofile
+#' @param rprofile_text Current text for .Rprofile
+#' @noRd
+add_slushy_rprofile_activate_code <- function(rprofile_text){
+
+  rprofile_text <- gsub("source(\"renv/activate.R\")", "", rprofile_text, fixed = TRUE)
+
+  rprofile_text <- c(
+    rprofile_text,
+    "## Code to activate renv",
+    "local({",
+    "  options(renv.config.synchronized.check = FALSE)",
+    "    activated_ok <- tryCatch({",
+    "       ok <- utils::capture.output({source(\"renv/activate.R\")}, type = \"output\")",
+    "       TRUE",
+    "    }, warning = function(w){",
+    "       FALSE",
+    "  })",
+    "  if (!activated_ok){",
+    "    lib <- renv::paths$library()",
+    "    stop(paste0(\"Problem activating {renv}. May be due to incorrect version\",",
+    "                 \" of {renv} already installed to project library.\",",
+    "                 \"\\nPlease try the following command followed by a session restart:\",",
+    "                 \"\\n`renv::remove(\\\"renv\\\", library = \\\"\", lib, \"\\\")`\"), call. = FALSE)",
+    "  }",
+    "})"
+  )
+
+  return(rprofile_text)
+}
+
+#' Auto check slushy status in text for .Rprofile
+#' @param rprofile_text Current text for .Rprofile
+#' @importFrom rprojroot is_rstudio_project
+#' @noRd
+add_slushy_rprofile_status_code <- function(rprofile_text){
+
+  rprofile_text <- c(
+    rprofile_text,
+    c(
+      "## Code to check slushy status",
+      "local({",
+      "  slushy::slushy_status()",
+      "})"
+    )
+  )
+
+  return(rprofile_text)
+}
+
+#' Add custom startup code to text for .Rprofile
+#' @param rprofile_text Current text for .Rprofile
+#' @param custom_startup Named list of code to be run prior to and following
+#'   core slushy startup. Code should be provided as character strings and named
+#'   "pre" and "post", depending on the order.
+#' @importFrom rprojroot is_rstudio_project
+#' @noRd
+add_slushy_rprofile_custom_code <- function(rprofile_text, custom_startup){
+
+  if (!is.null(custom_startup$pre)){
+    start_lines <- min(grep("^### SLUSHY RPROFILE - START ###", rprofile_text))
+
+    pre_slushy_lines <- seq_len(start_lines)
+    post_slushy_lines <- (start_lines+1):length(rprofile_text)
+
+    rprofile_text <- c(rprofile_text[pre_slushy_lines],
+                       "## Custom startup code for pre-slushy",
+                       custom_startup$pre,
+                       rprofile_text[post_slushy_lines])
+  }
+  if (!is.null(custom_startup$post)){
+    rprofile_text <- c(rprofile_text,
+                       "## Custom startup code for post-slushy",
+                       custom_startup$post)
+  }
+
+  return(rprofile_text)
+}
+
+
+
+#' Add slushy startup text to .Rprofile
+#' @param project path to project
+#' @param config List of slushy configs
+#' @noRd
+add_slushy_rprofile_code <- function(project = proj_root(),
+                                     config){
+
+  rprofile_file <- file.path(project, ".Rprofile")
+
+  if (file.exists(rprofile_file)){
+    rprofile_text <- readLines(rprofile_file, warn = FALSE)
+  } else {
+    rprofile_text <- ""
+  }
+
+  rprofile_text <- c(rprofile_text, "### SLUSHY RPROFILE - START ###") %>%
+    add_slushy_rprofile_env_code(config$environment) %>%
+    add_slushy_rprofile_activate_code() %>%
+    add_slushy_rprofile_install_code() %>%
+    add_slushy_rprofile_status_code() %>%
+    add_slushy_rprofile_custom_code(config$startup)
+
+  rprofile_text <- c(rprofile_text, "### SLUSHY RPROFILE - END ###")
+
+  writeLines(text = rprofile_text,
+             sep = "\n",
+             con = rprofile_file)
+
+}
+

@@ -1,0 +1,62 @@
+---
+title: "Config file"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Config file}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+ 
+The {slushy} package relies on a yml file for passing environment or organization-specific settings, such as the Package Manager repository URL, agreed-upon packages to install, use and location of the cache, sandbox, project library, etc., and text/code to include in the startup script (to be stored in the `.Rprofile`). The available fields for the config file are as follows, with the options to customize in the "< >":
+
+```
+< config name >:
+
+  rspm_url: "< url for the package manager repository > "
+  environment: 
+     < environment variables to be set, mainly for the {renv} set-up. Defined as: >
+     < ENV_VAR: ENV_VALUE >
+  pkgs: !expr < character vector of agreed-upon package, as R code >
+  startup:
+    pre: < character string of text to include in the beginning of startup script. NULL for none > 
+    post: < character string of text to include at the end of startup script. NULL for none > 
+
+```
+
+If there is a need for an additional field, please file an issue for consideration. 
+
+The config will be passed to functions that modify the environment such as `slushy_init()`, `slushy_add()`, and `slushy_update()`. There are several options for the source of this config:
+
+  1. By default {slushy} will use the config defined in the field `config_name` in the `slushy_config.yml` stored in the project root directory (see below for instructions for creating this file).
+  
+  2. If no config file is saved in the project directory, {slushy} will then use the default config stored in the {slushy} project. This config will source packages from the public Posit Package Manager. 
+  
+  3. Pass the config as a list, with fields matching those above.
+
+## Custom configs
+
+### Creating a new config
+
+To add a `slushy_config.yml` to your current working directory you can use the following function:
+
+```
+new_config() # pass config name if desired
+```
+
+You can modify the values in the template and/or add new configs. Please note that the config-level structure should not be modified and the `config_name` field is required. You can choose to add a new config to the file and edit the `config_name`. 
+
+### Utilizing the config 
+
+The `get_config()` function allows you to specify the name and location of the config file (if not `slushy_config.yml` in the current working directory).
+This function will then create a list from the config file. `get_config()` can be used directly as an argument to the {slushy} functions as such:
+
+```
+slushy_init(config = get_config(config_file = "my_slushy_config.yml"))
+```
