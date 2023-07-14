@@ -4,8 +4,9 @@ articles:
   navbar: Initialize & Maintain Environment
   contents:
   - maintain_env
-  - config_file
+  - config
 - title: Use Environment
   navbar: Use Environment
-  contents: use_env
+  contents: 
+  - use_env
 
