@@ -34,3 +34,4 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown
+URL: https://gsk-biostatistics.github.io/slushy/

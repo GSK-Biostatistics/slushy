@@ -1,3 +1,4 @@
+url: https://gsk-biostatistics.github.io/slushy/
 articles:
 - title: Initialize & Maintain Environment
   navbar: Initialize & Maintain Environment
@@ -6,5 +7,5 @@ articles:
   - config_file
 - title: Use Environment
   navbar: Use Environment
-  contents:
-  - use_env
+  contents: use_env
+
