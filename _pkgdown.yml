@@ -10,3 +10,23 @@ articles:
   contents: 
   - use_env
 
+reference:
+  - title: Setup
+    contents:
+    - slushy_init
+    - slushy_add
+    - slushy_drop
+    - slushy_reinit
+  - title: Maintenance
+    contents:
+    - slushy_update
+    - slushy_update_preview
+    - slushy_remove
+  - title: Daily Use
+    contents:
+    - slushy_status
+    - slushy_sync
+  - title: Config
+    contents:
+    - new_config
+    - get_config
