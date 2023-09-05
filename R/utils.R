@@ -292,6 +292,7 @@ quiet_remove <- function(pkg){
 #' @param repos Repos to snapshot. Defaults to those set in current session
 #' @param project path to project
 #' @param quiet Suppress confirmation message? defaults to FALSE
+#' @param force Force snapshot creation? defaults to FALSE
 #'
 #' @importFrom renv snapshot
 #' @importFrom utils capture.output
