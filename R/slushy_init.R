@@ -98,7 +98,8 @@ slushy_init <- function(date = NULL,
 
   # Create lock file from DESCRIPTION --------------------------------------
   update_snapshot(repos = repos,
-                  project = project)
+                  project = project,
+                  force = TRUE)
 
 
   # clean the project library to ensure we are starting fresh ----------------
