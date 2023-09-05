@@ -300,9 +300,10 @@ quiet_remove <- function(pkg){
 #' @noRd
 update_snapshot <- function(repos = getOption("repos"),
                             project = project,
-                            quiet = FALSE){
+                            quiet = FALSE,
+                            force = FALSE){
   val <- capture.output({
-    snapshot(project = project, type = "explicit", repos = repos, prompt = FALSE)
+    snapshot(project = project, type = "explicit", repos = repos, prompt = FALSE, force = force)
   })
   if(!quiet){
     val <- val[length(val)]
