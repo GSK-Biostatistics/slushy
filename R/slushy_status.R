@@ -43,7 +43,7 @@ slushy_status <- function(project = NULL, pkg_deps_ok = get_config()$pkg_deps_ok
   if (pkg_deps_ok){
     pkgs_ok <- names(fromJSON(file.path(project, "renv.lock"))$Packages)
   } else {
-    pkgs_ok <- desc_get_deps()$package
+    pkgs_ok <- unique(c(desc_get_deps()$package, "renv"))
   }
    
   pkgs_ok_plus_base <- unique(c(pkgs_ok, pkgs_base))
