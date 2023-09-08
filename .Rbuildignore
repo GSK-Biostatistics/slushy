@@ -6,3 +6,4 @@
 ^\.github$
 ^docs$
 ^pkgdown$
+^man/figures$
