@@ -28,6 +28,7 @@
 #' @importFrom cli cli_alert_info
 #' @importFrom tools package_dependencies
 #' @importFrom utils installed.packages
+#' @importFrom rlang `%||%`
 #'
 #' @examples
 #' \dontrun{
@@ -72,6 +73,8 @@ slushy_init <- function(date = NULL,
 
 
   # Initialize new renv project w/ snapshot date ----------------------------
+  config_date <- config$date
+  date <- date %||% config_date 
   repos <- get_repos(date,
                      repo_url = config$rspm_url)
 
