@@ -4,11 +4,13 @@
 \alias{slushy_status}
 \title{Check for differences between local environment and the project lock file.}
 \usage{
-slushy_status(project = NULL)
+slushy_status(project = NULL, pkg_deps_ok = get_config()$pkg_deps_ok)
 }
 \arguments{
 \item{project}{The project directory. If NULL, defaults to the nearest parent
 directory that contains an `.Rproj` file relative to the current working directory.}
+
+\item{pkg_deps_ok}{Include package dependencies as part of the agreed upon set? If FALSE, any use of these dependencies found in the project will be flagged in a message.}
 }
 \value{
 Sync status (TRUE = synced, FALSE = not synced), invisibly. This function is called for its side effects.

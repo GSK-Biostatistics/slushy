@@ -4,11 +4,13 @@
 \alias{slushy_sync}
 \title{Sync local environment to match the project's lockfile.}
 \usage{
-slushy_sync(project = NULL)
+slushy_sync(project = NULL, config = get_config())
 }
 \arguments{
 \item{project}{The project directory. If NULL, defaults to the nearest parent
-  directory that contains an `.Rproj` file relative to the current working directory.
+directory that contains an `.Rproj` file relative to the current working directory.}
+
+\item{config}{List of configuration options. If not provided, defaults to reading from default settings in config file included in slushy package.
 
 Install/update packages as needed to match the lockfile.}
 }
