@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slushy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9000</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_status</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_status</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span>, pkg_deps_ok <span class="op">=</span> <span class="fu"><a href="get_config.html">get_config</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">pkg_deps_ok</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,6 +72,10 @@
     <dl><dt>project</dt>
 <dd><p>The project directory. If NULL, defaults to the nearest parent
 directory that contains an `.Rproj` file relative to the current working directory.</p></dd>
+
+
+<dt>pkg_deps_ok</dt>
+<dd><p>Include package dependencies as part of the agreed upon set? If FALSE, any use of these dependencies found in the project will be flagged in a message.</p></dd>
 
 </dl></div>
     <div id="value">

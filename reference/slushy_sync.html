@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slushy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0.9000</span>
       </span>
     </div>
 
@@ -64,14 +64,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_sync</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_sync</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span>, config <span class="op">=</span> <span class="fu"><a href="get_config.html">get_config</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>project</dt>
 <dd><p>The project directory. If NULL, defaults to the nearest parent
-  directory that contains an `.Rproj` file relative to the current working directory.</p>
+directory that contains an `.Rproj` file relative to the current working directory.</p></dd>
+
+
+<dt>config</dt>
+<dd><p>List of configuration options. If not provided, defaults to reading from default settings in config file included in slushy package.</p>
 <p>Install/update packages as needed to match the lockfile.</p></dd>
 
 </dl></div>
