@@ -292,6 +292,7 @@ quiet_remove <- function(pkg){
 #' @param repos Repos to snapshot. Defaults to those set in current session
 #' @param project path to project
 #' @param quiet Suppress confirmation message? defaults to FALSE
+#' @param force Force snapshot creation? defaults to FALSE
 #'
 #' @importFrom renv snapshot
 #' @importFrom utils capture.output
@@ -300,9 +301,10 @@ quiet_remove <- function(pkg){
 #' @noRd
 update_snapshot <- function(repos = getOption("repos"),
                             project = project,
-                            quiet = FALSE){
+                            quiet = FALSE,
+                            force = FALSE){
   val <- capture.output({
-    snapshot(project = project, type = "explicit", repos = repos, prompt = FALSE)
+    snapshot(project = project, type = "explicit", repos = repos, prompt = FALSE, force = force)
   })
   if(!quiet){
     val <- val[length(val)]

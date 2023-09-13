@@ -1,7 +1,7 @@
 Package: slushy
 Type: Package
 Title: Create and manage controlled R environments
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R:
     c(person(given = "Becca",
              family = "Krouse",

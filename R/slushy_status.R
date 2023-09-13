@@ -2,6 +2,7 @@
 #'
 #' @param project The project directory. If NULL, defaults to the nearest parent
 #'   directory that contains an `.Rproj` file relative to the current working directory.
+#' @param pkg_deps_ok Include package dependencies as part of the agreed upon set? If FALSE, any use of these dependencies found in the project will be flagged in a message.
 #'
 #' @return Sync status (TRUE = synced, FALSE = not synced), invisibly. This function is called for its side effects.
 #' @export
@@ -22,12 +23,13 @@
 #' @importFrom dplyr summarise group_by filter pull select
 #' @importFrom cli cli_alert_success cli_alert_warning cli_h2
 #' @importFrom rlang .data
+#' @importFrom desc desc_get_deps
 #'
 #' @examples
 #' \dontrun{
 #'   slushy_status()
 #' }
-slushy_status <- function(project = NULL){
+slushy_status <- function(project = NULL, pkg_deps_ok = get_config()$pkg_deps_ok){
 
   if (is.null(project)){
     project <- proj_root()
@@ -37,9 +39,15 @@ slushy_status <- function(project = NULL){
                                   priority = c("base", "recommended")) %>% row.names()
   pkgs_deps <- dependencies(root = project, progress = FALSE)
   pkgs_used <- unique(pkgs_deps)$Package
-  pkgs_lock <- names(fromJSON(file.path(project, "renv.lock"))$Packages)
-  pkgs_lock_plus_base <- unique(c(pkgs_lock, pkgs_base))
-  pkgs_extra <- setdiff(pkgs_used, pkgs_lock_plus_base)
+  
+  if (pkg_deps_ok){
+    pkgs_ok <- names(fromJSON(file.path(project, "renv.lock"))$Packages)
+  } else {
+    pkgs_ok <- unique(c(desc_get_deps()$package, "renv"))
+  }
+   
+  pkgs_ok_plus_base <- unique(c(pkgs_ok, pkgs_base))
+  pkgs_extra <- setdiff(pkgs_used, pkgs_ok_plus_base)
 
 
   cli_h2("Checking slushy sync status")
@@ -51,11 +59,11 @@ slushy_status <- function(project = NULL){
       pull(.data$print_txt)
 
     cli_alert_warning(
-      paste0("The following packages are being used in the project but are not recorded in the lockfile:\n",
+      paste0("The following packages are being used in the project but are not part of the agreed-upon set:\n",
              paste0(pkgs_print_txt, collapse = "\n\n"))
     )
   } else {
-    cli_alert_success("All packages used in the project are recorded in the lockfile.")
+    cli_alert_success("All packages used in the project are part of the agreed-upon set.")
   }
 
   renv_status <- quietly(status)(project = project)$result

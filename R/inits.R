@@ -71,14 +71,14 @@ add_slushy_rprofile_activate_code <- function(rprofile_text){
 #' @param rprofile_text Current text for .Rprofile
 #' @importFrom rprojroot is_rstudio_project
 #' @noRd
-add_slushy_rprofile_status_code <- function(rprofile_text){
+add_slushy_rprofile_status_code <- function(rprofile_text, pkg_deps_ok){
 
   rprofile_text <- c(
     rprofile_text,
     c(
       "## Code to check slushy status",
       "local({",
-      "  slushy::slushy_status()",
+      paste0("  slushy::slushy_status(pkg_deps_ok = ", pkg_deps_ok, ")"),
       "})"
     )
   )
@@ -136,7 +136,7 @@ add_slushy_rprofile_code <- function(project = proj_root(),
     add_slushy_rprofile_env_code(config$environment) %>%
     add_slushy_rprofile_activate_code() %>%
     add_slushy_rprofile_install_code() %>%
-    add_slushy_rprofile_status_code() %>%
+    add_slushy_rprofile_status_code(config$pkg_deps_ok) %>%
     add_slushy_rprofile_custom_code(config$startup)
 
   rprofile_text <- c(rprofile_text, "### SLUSHY RPROFILE - END ###")

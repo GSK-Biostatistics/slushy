@@ -1,5 +1,5 @@
 
-# {slushy}
+# {slushy} <img src="man/figures/slushy_hex.png" align="right" height="150" />
 
 ## About
 
@@ -25,6 +25,8 @@ You can install the development version of {slushy} like so:
 ``` r
 devtools::install_github("GSK-Biostatistics/slushy")
 ```
+
+*Note:* {renv} is a key dependency of {slushy}. While {renv}>0.17.0 is supported, for best results, it is currently recommended to stick with 0.17.1-0.17.3 for use with {slushy} 
 
 ## Use
 
