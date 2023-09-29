@@ -80,6 +80,12 @@ slushy_init <- function(date = NULL,
 
   options("repos" = repos)
 
+  
+  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
+  document_pkgs(pkgs = "slushy",
+                project = project)
+  
+  # initialize
   init(
     project = project,
     repos = repos,
@@ -94,10 +100,6 @@ slushy_init <- function(date = NULL,
 
   # copy slushy pkg to project directory if not there -------------------
   try_install_slushy(slushy_loc)
-
-  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
-  document_pkgs(pkgs = "slushy",
-                project = project)
 
   # Create lock file from DESCRIPTION --------------------------------------
   update_snapshot(repos = repos,

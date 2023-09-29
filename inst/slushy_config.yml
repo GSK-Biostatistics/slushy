@@ -6,7 +6,6 @@ default:
     environment:
       RENV_CONFIG_USE_CACHE: TRUE
       RENV_CONFIG_SANDBOX_ENABLED: TRUE
-      RENV_PATHS_LIBRARY_ROOT: "file.path(\"renv/library\")"
     date: NULL
     pkgs: NULL
     pkg_deps_ok: TRUE
