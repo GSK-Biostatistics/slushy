@@ -80,11 +80,13 @@ slushy_init <- function(date = NULL,
 
   options("repos" = repos)
 
+  settings <- c(list(snapshot.type = "explicit"), config$renv_settings)
+  settings <- settings[!duplicated(names(settings))]
   init(
     project = project,
     repos = repos,
     bare = TRUE,
-    settings = list(snapshot.type = "explicit"),
+    settings = settings,
     restart = FALSE
   )
 
