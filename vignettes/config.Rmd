@@ -24,7 +24,8 @@ The {slushy} package relies on a yml file for passing environment or organizatio
      < environment variables to be set, mainly for the {renv} set-up. Defined as: >
      < ENV_VAR: ENV_VALUE >
   renv_settings:
-     < settings to be passed to renv::init settings argument >
+     < {renv} project settings (`?renv::settings` for more info). Defined as: >
+     < SETTING_NAME: SETTING_VALUE >
   date: <character string of the snapshot date as yyyy-mm-dd>
   pkgs: !expr < character vector of agreed-upon package, as R code >
   pkg_deps_ok: <logical indicating whether package dependencies are ok (TRUE) or should be flagged if used directly (FALSE)>
