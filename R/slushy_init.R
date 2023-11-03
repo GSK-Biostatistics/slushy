@@ -79,9 +79,14 @@ slushy_init <- function(date = NULL,
                      repo_url = config$rspm_url)
 
   options("repos" = repos)
-
+  
+  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
+  document_pkgs(pkgs = "slushy",
+                project = project)
+  
+  # initialize 
   settings <- c(list(snapshot.type = "explicit"), config$renv_settings)
-  settings <- settings[!duplicated(names(settings))]
+  settings <- settings[!duplicated(names(settings))] 
   init(
     project = project,
     repos = repos,
@@ -96,10 +101,6 @@ slushy_init <- function(date = NULL,
 
   # copy slushy pkg to project directory if not there -------------------
   try_install_slushy(slushy_loc)
-
-  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
-  document_pkgs(pkgs = "slushy",
-                project = project)
 
   # Create lock file from DESCRIPTION --------------------------------------
   update_snapshot(repos = repos,
