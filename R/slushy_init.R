@@ -79,18 +79,19 @@ slushy_init <- function(date = NULL,
                      repo_url = config$rspm_url)
 
   options("repos" = repos)
-
   
   # create empty DESCRIPTION just listing {slushy} as an Import --------------------
   document_pkgs(pkgs = "slushy",
                 project = project)
   
-  # initialize
+  # initialize 
+  settings <- c(list(snapshot.type = "explicit"), config$renv_settings)
+  settings <- settings[!duplicated(names(settings))] 
   init(
     project = project,
     repos = repos,
     bare = TRUE,
-    settings = list(snapshot.type = "explicit"),
+    settings = settings,
     restart = FALSE
   )
 
