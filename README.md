@@ -26,8 +26,6 @@ You can install the development version of {slushy} like so:
 devtools::install_github("GSK-Biostatistics/slushy")
 ```
 
-*Note:* {renv} is a key dependency of {slushy}. While {renv}>0.17.0 is supported, for best results, it is currently recommended to stick with 0.17.1-0.17.3 for use with {slushy} 
-
 ## Use
 
 Actions available in {slushy} primarily fall into 2 categories: (1) initialization and maintenance of the environment, and (2) use of the environment. Please reference the corresponding vignettes for specifics. 
