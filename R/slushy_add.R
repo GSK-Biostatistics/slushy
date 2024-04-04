@@ -92,6 +92,8 @@ slushy_drop <- function(pkgs,
       try_drop(pkg)
     )
   }
+  
+  removed_pkgs <- sapply(removed_pkgs, function(x) strsplit(x, "@")[[1]][1])
 
   # update description file
   existing_deps <- desc_get_deps(file = file.path(project, "DESCRIPTION"))
