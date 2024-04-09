@@ -159,7 +159,7 @@ add_desc_deps <- function(pkgs, file = proj_root("DESCRIPTION"), replace = FALSE
   existing_deps <- desc_get_deps(file = file)
 
   if (length(pkgs)>0){
-    deps <- data.frame(type = "Imports", package = pkgs,version = "*", stringsAsFactors = FALSE)
+    deps <- data.frame(type = "Imports", package = gsub("@.*","", pkgs), version = "*", stringsAsFactors = FALSE)
     if (!replace){
       deps <- rbind(existing_deps, deps)
     }
