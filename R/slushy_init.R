@@ -51,7 +51,6 @@ slushy_init <- function(date = NULL,
 
   # force slushy ------------------------------------------------------------
   pkgs <- c(config$pkgs, "slushy") %>% unique()
-  pkgs <- sapply(pkgs, function(x) strsplit(x, "@")[[1]][1])
 
   # slushy lib path ---------------------------------------------------------
   slushy_loc <- .getNamespaceInfo(asNamespace("slushy"), "path")
