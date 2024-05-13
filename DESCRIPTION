@@ -26,7 +26,7 @@ Imports:
     jsonlite,
     magrittr,
     purrr,
-    renv (>= 1.0.5),
+    renv (>= 1.0.7),
     rlang,
     rprojroot,
     rstudioapi,
