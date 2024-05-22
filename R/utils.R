@@ -191,6 +191,7 @@ get_agreed_pkgs <- function(config = get_config()){
 # install packages and dependencies
 #' @param pkg Name of package as string
 #' @param library The R library to be used. If NULL, the active project library will be used.
+#' @param repos Repos to install packages from
 #' @param check_agreed Check that package has been defined as an agreed upon package (defined in config), and inform the user if not
 #' @param config Slushy config list containing packages
 #'
@@ -201,6 +202,7 @@ get_agreed_pkgs <- function(config = get_config()){
 #' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done
 try_install <- function(pkg,
                         library = NULL,
+                        repos = NULL,
                         check_agreed = FALSE,
                         config = get_config()){
 
@@ -214,7 +216,7 @@ try_install <- function(pkg,
   id  <- cli_step_notime(paste0("Installing `", pkg, "`...{res}"))
 
   success <- tryCatch({
-    p <- capture.output({install(pkg, library = library, prompt = FALSE)})
+    p <- capture.output({install(pkg, library = library, repos = repos, prompt = FALSE)})
     res <- "success"
     cli_progress_done(id = id, result = "done")
     pkg

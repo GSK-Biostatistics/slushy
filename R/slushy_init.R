@@ -119,7 +119,7 @@ slushy_init <- function(date = NULL,
 
   # Install necessary packages ----------------------------------------------
   for(pkg in setdiff(pkgs, "slushy")){
-    try_install(pkg, check_agreed = TRUE, config = config)
+    try_install(pkg, repos = repos, check_agreed = TRUE, config = config)
   }
 
   # Look for dependencies of slushy that may be missing --------------------
