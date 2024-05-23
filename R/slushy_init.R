@@ -131,7 +131,7 @@ slushy_init <- function(date = NULL,
 
   if (length(slushy_deps_missing)>0){
     for(pkg in slushy_deps_missing){
-      try_install(pkg, check_agreed = FALSE, config = config)
+      try_install(pkg, repos = repos, check_agreed = FALSE, config = config)
     }
   }
 
