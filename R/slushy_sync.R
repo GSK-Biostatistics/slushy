@@ -19,29 +19,32 @@
 #'   slushy_sync()
 #' }
 slushy_sync <- function(project = NULL, config = get_config()){
-
+  
   # Confirm Clean Environment
   confirm_clean_env()
-
+  
   res <- suppressMessages(slushy_status(project = project))
-
+  
   pkg_deps_ok <- config$pkg_deps_ok %||% TRUE
   
   if(res){
     out <- slushy_status(project = project, pkg_deps_ok)
     return(invisible(out))
   }
-
-
+  
+  
   # restore
-  restore_results <- quietly(restore)(project = project, clean = TRUE, prompt = FALSE)$result
-
-  for (i in seq_along(restore_results)) {
-    cli_alert_success("Updated {names(restore_results)[i]} to {restore_results[[i]]$Version}")
-  }
-
+  # restore_results <- quietly(restore)(project = project, 
+  restore(repos = getOption("repos"), # loaded from renv.lock by renv::load() in renv/activate.R 
+          clean = TRUE, 
+          prompt = FALSE) #$result
+  
+  # for (i in seq_along(restore_results)) {
+  #   cli_alert_success("Updated {names(restore_results)[i]} to {restore_results[[i]]$Version}")
+  # }
+  
   # rerun status check
   slushy_status(project = project, pkg_deps_ok)
-
+  
   return(invisible(TRUE))
 }
