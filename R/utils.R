@@ -49,7 +49,8 @@ confirm_clean_env <- function(){
       "package:methods",
       "Autoloads",
       "package:base",
-      "package:slushy"
+      "package:slushy",
+      "tools:callr"
     )
   )
 
