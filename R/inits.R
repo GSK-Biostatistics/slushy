@@ -30,7 +30,7 @@ add_slushy_rprofile_install_code <- function(rprofile_text){
 
   c(rprofile_text,
     "## Code to install correct version of slushy if needed",
-    "renv::restore(packages = \"slushy\", prompt = FALSE)"
+    "renv::restore(packages = \"slushy\", repos = getOption(\"repos\"), prompt = FALSE)"
   )
 }
 
