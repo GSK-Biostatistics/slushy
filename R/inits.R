@@ -147,3 +147,45 @@ add_slushy_rprofile_code <- function(project = proj_root(),
 
 }
 
+
+#' Take extra measures to ensure slushy works as expected in a git project
+#' 
+#' Makes modifications to the .gitignore and .renvignore files to ensure the following:
+#' - critical files related to slushy are not accidentally ignored by git
+#' - R packages being used in the project are not accidentally overlooked
+#' 
+#' @param project location of project
+#' 
+#' @noRd
+update_ignores <- function(project = proj_root()){
+  
+  # add slushy files to gitignore
+  git_ignore_file <- file.path(project, ".gitignore")
+  renv_files <- c("!DESCRIPTION",
+                  "!.Rprofile",
+                  "!.renvignore",
+                  "!renv",
+                  "!renv.lock",
+                  "!*.Rproj")
+  
+  if (file.exists(git_ignore_file)){
+    git_ignore <- readLines(git_ignore_file, warn = FALSE)
+    
+    git_ignore_add <- setdiff(renv_files, git_ignore)
+    
+    if (length(git_ignore_add)>0){
+      git_ignore <- c(git_ignore, git_ignore_add)
+       
+      writeLines(text = git_ignore,
+                 sep = "\n",
+                 con = file.path(project, ".gitignore")) 
+    }
+  }
+  
+  # create renvignore file to be used for dependency checking in lieu of gitignore
+  if (! file.exists(".renvignore")){
+    writeLines(text = "",
+               sep = "\n",
+               con = file.path(project, ".renvignore"))
+  }
+}

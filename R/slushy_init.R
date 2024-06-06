@@ -70,6 +70,10 @@ slushy_init <- function(date = NULL,
   # Clean out slushy things from the Rprofile, if applicable -----------------
   clean_rprofile(project = project,
                  remove_empty = TRUE)
+  
+
+  # update ignores ----------------------------------------------------------
+  update_ignores(project = project)
 
 
   # Initialize new renv project w/ snapshot date ----------------------------
@@ -98,6 +102,7 @@ slushy_init <- function(date = NULL,
   ## add necessary configurations to the .Rprofile to be run on startup
   add_slushy_rprofile_code(project = project,
                            config)
+
 
   # copy slushy pkg to project directory if not there -------------------
   try_install_slushy(slushy_loc)
