@@ -70,6 +70,10 @@ slushy_init <- function(date = NULL,
   # Clean out slushy things from the Rprofile, if applicable -----------------
   clean_rprofile(project = project,
                  remove_empty = TRUE)
+  
+
+  # update ignores ----------------------------------------------------------
+  update_ignores(project = project)
 
 
   # Initialize new renv project w/ snapshot date ----------------------------
@@ -79,9 +83,14 @@ slushy_init <- function(date = NULL,
                      repo_url = config$rspm_url)
 
   options("repos" = repos)
-
+  
+  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
+  document_pkgs(pkgs = "slushy",
+                project = project)
+  
+  # initialize 
   settings <- c(list(snapshot.type = "explicit"), config$renv_settings)
-  settings <- settings[!duplicated(names(settings))]
+  settings <- settings[!duplicated(names(settings))] 
   init(
     project = project,
     repos = repos,
@@ -94,12 +103,9 @@ slushy_init <- function(date = NULL,
   add_slushy_rprofile_code(project = project,
                            config)
 
+
   # copy slushy pkg to project directory if not there -------------------
   try_install_slushy(slushy_loc)
-
-  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
-  document_pkgs(pkgs = "slushy",
-                project = project)
 
   # Create lock file from DESCRIPTION --------------------------------------
   update_snapshot(repos = repos,
@@ -118,7 +124,7 @@ slushy_init <- function(date = NULL,
 
   # Install necessary packages ----------------------------------------------
   for(pkg in setdiff(pkgs, "slushy")){
-    try_install(pkg, check_agreed = TRUE, config = config)
+    try_install(pkg, repos = repos, check_agreed = TRUE, config = config)
   }
 
   # Look for dependencies of slushy that may be missing --------------------
@@ -130,7 +136,7 @@ slushy_init <- function(date = NULL,
 
   if (length(slushy_deps_missing)>0){
     for(pkg in slushy_deps_missing){
-      try_install(pkg, check_agreed = FALSE, config = config)
+      try_install(pkg, repos = repos, check_agreed = FALSE, config = config)
     }
   }
 
