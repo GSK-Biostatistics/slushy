@@ -1,5 +1,5 @@
 
-# {slushy} <img src="man/figures/slushy_hex.png" align="right" height="150" />
+# {slushy} <img src="man/figures/slushy_hex.png" align="right" height="139" />
 
 ## About
 
