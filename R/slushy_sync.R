@@ -10,7 +10,6 @@
 #' @export
 #'
 #' @importFrom renv restore
-#' @importFrom purrr quietly
 #' @importFrom cli cli_alert_success cli_h2
 #' @importFrom rlang `%||%`
 #'
