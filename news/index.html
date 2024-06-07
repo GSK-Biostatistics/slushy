@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slushy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.0999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -61,6 +61,13 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="slushy-050">slushy 0.5.0<a class="anchor" aria-label="anchor" href="#slushy-050"></a></h2>
+<ul><li>Upversion {renv} dependency</li>
+<li>Set config <code>ppm.enabled</code> to <code>FALSE</code> and settings <code>ppm.enabled</code> to <code>TRUE</code> in the included config to disable use of P3M in addition to specified PPM repo.</li>
+<li>Allow <code><a href="../reference/slushy_sync.html">slushy_sync()</a></code> to print messages from <code><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">renv::restore()</a></code> in real time</li>
+<li>Modify <code>.gitignore</code> and <code>.renvignore</code> during <code><a href="../reference/slushy_init.html">slushy_init()</a></code> to ensure slushy works as expected in a git project. Specifically, <code><a href="../reference/slushy_init.html">slushy_init()</a></code> now updates the <code>.gitignore</code> so critical files related to slushy are not accidentally ignored by git, and adds a <code>.renvignore</code> file to ensure R packages being used in the project are not accidentally overlooked.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="slushy-040">slushy 0.4.0<a class="anchor" aria-label="anchor" href="#slushy-040"></a></h2>
 <p>First release.</p>
