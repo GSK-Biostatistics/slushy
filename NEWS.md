@@ -1,4 +1,4 @@
-# slushy development version
+# slushy 0.5.0
 
 - Upversion {renv} dependency
 - Set config `ppm.enabled` to `FALSE` and settings `ppm.enabled` to `TRUE` in the included config to disable use of P3M in addition to specified PPM repo.
