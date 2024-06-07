@@ -1,7 +1,12 @@
 
 # {slushy} <img src="man/figures/slushy_hex.png" align="right" height="139" />
 
-## About
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/GSK-Biostatistics/slushy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GSK-Biostatistics/slushy/actions/workflows/R-CMD-check.yaml) 
+[![status:
+experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental) 
+<!-- badges: end -->
 
 {slushy} is a wrapper built on {renv} to mirror a controlled R environment through CRAN snapshots and an agreed set of packages.
 
