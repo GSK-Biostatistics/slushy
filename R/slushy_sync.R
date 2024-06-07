@@ -34,14 +34,11 @@ slushy_sync <- function(project = NULL, config = get_config()){
   
   
   # restore
-  # restore_results <- quietly(restore)(project = project, 
-  restore(repos = getOption("repos"), # loaded from renv.lock by renv::load() in renv/activate.R 
+  restore(project = project, 
+          repos = getOption("repos"), # loaded from renv.lock by renv::load() in renv/activate.R 
           clean = TRUE, 
-          prompt = FALSE) #$result
-  
-  # for (i in seq_along(restore_results)) {
-  #   cli_alert_success("Updated {names(restore_results)[i]} to {restore_results[[i]]$Version}")
-  # }
+          prompt = FALSE) 
+
   
   # rerun status check
   slushy_status(project = project, pkg_deps_ok)
