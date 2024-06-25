@@ -2,7 +2,7 @@ default:
   config_name: public
 
   public:
-    rspm_url: "https://packagemanager.rstudio.com/cran"
+    rspm_url: "https://packagemanager.posit.co/cran"
     environment:
       RENV_CONFIG_SANDBOX_ENABLED: TRUE
       RENV_CONFIG_PPM_ENABLED: FALSE

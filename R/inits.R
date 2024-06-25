@@ -6,8 +6,13 @@
 #' @importFrom purrr reduce imap
 #' @importFrom rlang is_empty
 #' @noRd
-add_slushy_rprofile_env_code <- function(rprofile_text, env_settings){
+add_slushy_rprofile_env_code <- function(rprofile_text, rspm_url, env_settings){
 
+  # use rspm_url's "latest" repo if override not specified
+  if (!"RENV_CONFIG_REPOS_OVERRIDE" %in% names(env_settings)){
+    env_settings <- c(env_settings, 
+                      list(RENV_CONFIG_REPOS_OVERRIDE = paste0("\"", rspm_url, "/latest\"")))
+  }
   env_settings_to_text <- imap(env_settings, function(x,y) {
     paste0("Sys.setenv(", y, " = ", x, ")")
   })
@@ -133,7 +138,7 @@ add_slushy_rprofile_code <- function(project = proj_root(),
   }
 
   rprofile_text <- c(rprofile_text, "### SLUSHY RPROFILE - START ###") %>%
-    add_slushy_rprofile_env_code(config$environment) %>%
+    add_slushy_rprofile_env_code(config$rspm_url, config$environment) %>%
     add_slushy_rprofile_activate_code() %>%
     add_slushy_rprofile_install_code() %>%
     add_slushy_rprofile_status_code(config$pkg_deps_ok) %>%
