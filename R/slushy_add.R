@@ -34,7 +34,7 @@ slushy_add <- function(pkgs,
   for(pkg in pkgs){
     installed_pkgs <- c(
       installed_pkgs,
-      try_install(pkg, check_agreed = TRUE, config = config)
+      try_install(pkg, repos = getOption("repos"), check_agreed = TRUE, config = config)
     )
   }
 
