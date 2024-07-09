@@ -1,3 +1,6 @@
+# slushy 0.5.2
+- Explicitly pass repos to `renv::install` for `slushy_add`
+
 # slushy 0.5.1
 - Fix issue where selected version of {renv} may be unable to be retrieved on start up if it does not align with {renv} version from selected CRAN snapshot.
 
