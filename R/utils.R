@@ -206,19 +206,26 @@ try_install <- function(pkg,
                         repos = NULL,
                         check_agreed = FALSE,
                         config = get_config()){
-
+  
   if (check_agreed){
     if (!pkg %in% get_agreed_pkgs(config)){
       cli_alert_warning(paste0("Note: `", pkg, "` is not part of the agreed upon set of packages."))
     }
   }
-
+  
   res <- ""
-  id  <- cli_step_notime(paste0("Installing `", pkg, "`...{res}"))
-
+  id  <- cli_step_notime(paste0("Installing `", pkg, "` ... {res}"))
+  
   success <- tryCatch({
-    p <- capture.output({install(pkg, library = library, repos = repos, prompt = FALSE)})
-    res <- "success"
+    p <- capture.output({
+      install_result <- install(pkg, library = library, repos = repos, prompt = FALSE)
+    })
+    
+    pkg_version <- install_result[[pkg]]$Version
+    pkg_url <- attr(install_result[[pkg]], "url")
+    pkg_url_trimmed <- str_extract(pkg_url, "(cran|rspm|warp.*?)/\\d{4}-\\d{2}-\\d{2}")
+    
+    res <- paste0("success (version ", pkg_version, ", ", pkg_url_trimmed, ")")
     cli_progress_done(id = id, result = "done")
     pkg
   }, error = function(e){
@@ -226,11 +233,11 @@ try_install <- function(pkg,
     cli_progress_done(id = id, result = "failed")
     quiet_remove(pkg)
     return(NULL)
-  }
-  )
-
+  })
+  
   invisible(success)
 }
+
 
 
 # copy slushy package and install dependencies if needed
