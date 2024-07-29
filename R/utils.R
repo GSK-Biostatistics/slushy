@@ -223,7 +223,8 @@ try_install <- function(pkg,
     
     pkg_version <- install_result[[pkg]]$Version
     pkg_url <- attr(install_result[[pkg]], "url")
-    pkg_url_trimmed <- str_extract(pkg_url, "(cran|rspm|warp.*?)/\\d{4}-\\d{2}-\\d{2}")
+    regex <- "([^/]*?_?cran.*?/\\d{4}-\\d{2}-\\d{2})"
+    pkg_url_trimmed <- str_extract(pkg_url, regex)
     
     res <- paste0("success (version ", pkg_version, ", ", pkg_url_trimmed, ")")
     cli_progress_done(id = id, result = "done")
