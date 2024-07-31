@@ -223,8 +223,14 @@ try_install <- function(pkg,
     
     pkg_version <- install_result[[pkg]]$Version
     pkg_url <- attr(install_result[[pkg]], "url")
-    regex <- "([^/]*?_?cran.*?/\\d{4}-\\d{2}-\\d{2})"
-    pkg_url_trimmed <- str_extract(pkg_url, regex)
+    config_url <- config$rspm_url
+    
+    pattern_before_third_fwdslash <- "^([^/]*\\/){3}"
+    pattern_after_date <- "(\\d{4}-\\d{2}-\\d{2}).*"
+    
+    pkg_url_trimmed <- str_extract(config_url, pattern_before_third_fwdslash) %>%
+      gsub("", pkg_url) %>% # remove domain from pkg_url to get following path
+      sub(pattern_after_date, "\\1", .) # remove anything after the date
     
     res <- paste0("success (version ", pkg_version, ", ", pkg_url_trimmed, ")")
     cli_progress_done(id = id, result = "done")
