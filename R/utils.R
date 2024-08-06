@@ -200,7 +200,8 @@ get_agreed_pkgs <- function(config = get_config()){
 #'
 #' @importFrom renv install
 #' @importFrom utils capture.output
-#' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done
+#' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done cli_step_notime
+#' @importFrom stringr str_extract str_remove
 try_install <- function(pkg,
                         library = NULL,
                         repos = NULL,
@@ -224,15 +225,22 @@ try_install <- function(pkg,
     pkg_version <- install_result[[pkg]]$Version
     pkg_url <- attr(install_result[[pkg]], "url")
     config_url <- config$rspm_url
-    
-    pattern_before_third_fwdslash <- "^([^/]*\\/){3}"
+
+    # define regex patterns
+    pattern_url_prefix <- "^(http://|https://|www\\.)"
+    pattern_first_slash <- "^[^/]+/"
     pattern_after_date <- "(\\d{4}-\\d{2}-\\d{2}).*"
     
-    pkg_url_trimmed <- str_extract(config_url, pattern_before_third_fwdslash) %>%
-      gsub("", pkg_url) %>% # remove domain from pkg_url to get following path
-      sub(pattern_after_date, "\\1", .) # remove anything after the date
+    # remove protocol/subdomain (pkg_url)
+    pkg_url_trimmed <- str_remove(pkg_url, pattern_url_prefix)
     
-    res <- paste0("success (version ", pkg_version, ", ", pkg_url_trimmed, ")")
+    # remove protocol/subdomain (config_url), extract up to first slash, remove from pkg_url_trimmed, remove characters after date
+    output_url <- str_remove(config_url, pattern_url_prefix) %>%
+      str_extract(pattern_first_slash) %>%
+      gsub("", pkg_url_trimmed) %>%
+      sub(pattern_after_date, "\\1", .)
+    
+    res <- paste0("success (version ", pkg_version, ", ", output_url, ")")
     cli_progress_done(id = id, result = "done")
     pkg
   }, error = function(e){
@@ -260,7 +268,7 @@ try_install_slushy <- function(slushy_loc,
                                library = NULL){
 
   res <- ""
-  id  <- cli_step_notime(paste0("Installing `slushy`...{res}"))
+  id  <- cli_step_notime(paste0("Installing `slushy`... {res}"))
 
   if (is.null(library)){
     library <- .libPaths()[1]
