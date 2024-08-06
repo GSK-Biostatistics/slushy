@@ -17,7 +17,7 @@ Description: A wrapper built on {renv} to mirror a controlled R environment thro
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports: 
     cli,
     config,
@@ -30,7 +30,8 @@ Imports:
     rlang,
     rprojroot,
     rstudioapi,
-    yaml
+    yaml,
+    stringr
 Suggests: 
     knitr,
     rmarkdown

@@ -200,7 +200,7 @@ get_agreed_pkgs <- function(config = get_config()){
 #'
 #' @importFrom renv install
 #' @importFrom utils capture.output
-#' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done cli_step_notime
+#' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done
 #' @importFrom stringr str_extract str_remove
 try_install <- function(pkg,
                         library = NULL,
