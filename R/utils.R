@@ -274,7 +274,7 @@ try_install <- function(pkg,
     cli_progress_done(id = id, result = "done")
     pkg
   }, error = function(e){
-    res <- "not available in this snapshot"
+    res <- "installation failed"
     cli_progress_done(id = id, result = "failed")
     quiet_remove(pkg)
     return(NULL)
