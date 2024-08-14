@@ -34,5 +34,7 @@ Imports:
     stringr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 URL: https://gsk-biostatistics.github.io/slushy/
+Config/testthat/edition: 3
