@@ -18,14 +18,15 @@
 #' \dontrun{
 #'  slushy_remove()
 #' }
-slushy_remove <- function(project = NULL, restart = TRUE){
-
+slushy_remove <- function(project = NULL, restart = TRUE, keep = "slushy_config.yml"){
+  
   if (is.null(project)){
     project <- proj_root()
   }
-
+  
   # remove standalone files
-  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml")
+  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml") |>
+    setdiff(keep)
 
   for (f in files){
     f <- file.path(project, f)

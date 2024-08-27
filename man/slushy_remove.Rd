@@ -4,7 +4,7 @@
 \alias{slushy_remove}
 \title{Remove slushy infrastructure from a project.}
 \usage{
-slushy_remove(project = NULL, restart = TRUE)
+slushy_remove(project = NULL, restart = TRUE, keep = "slushy_config.yml")
 }
 \arguments{
 \item{project}{The project directory. If NULL, defaults to the nearest parent
