@@ -25,7 +25,7 @@
 #' session restarts and {renv} is activated for the project.
 #'
 #' @importFrom renv init paths restore
-#' @importFrom cli cli_alert_info
+#' @importFrom cli cli_alert_info cli_h3
 #' @importFrom tools package_dependencies
 #' @importFrom utils installed.packages
 #' @importFrom rlang `%||%`
@@ -135,6 +135,7 @@ slushy_init <- function(date = NULL,
     rownames(installed.packages()))
 
   if (length(slushy_deps_missing)>0){
+    cli_h3("Installing missing slushy dependencies:")
     for(pkg in slushy_deps_missing){
       try_install(pkg, repos = repos, check_agreed = FALSE, config = config)
     }

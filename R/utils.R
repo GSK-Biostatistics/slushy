@@ -189,6 +189,50 @@ get_agreed_pkgs <- function(config = get_config()){
   c(pkgs_base, pkgs_config) %>% unique()
 }
 
+
+# Modify the package URL based on the slushy_config info (helper function)
+#'
+#' This function modifies the URL of the package being installed (`pkg_url`) using 
+#' the config URL (`config_url`). It removes the protocol/subdomain (https, etc.) from 
+#' both URLs, then extracts and substitutes specific parts to generate 
+#' the output URL. If the modification process fails, the original 
+#' `pkg_url` is returned.
+#'
+#' @param pkg_url The original package URL as a string.
+#' @param config_url The configuration URL from the Slushy config list as a string.
+#' @return The modified URL as a string, or the original `pkg_url` if modification fails.
+#'
+#' @noRd
+#'
+#' @importFrom stringr str_extract str_remove
+modify_url <- function(pkg_url, config_url) {
+  # Define regex patterns
+  pattern_url_prefix <- "^(http://|https://|www\\.)"
+  pattern_first_slash <- "^[^/]+/"
+  pattern_after_date <- "(\\d{4}-\\d{2}-\\d{2}).*"
+  
+  # Check for null values and modify the URL accordingly
+  if (is.null(pkg_url)) {
+    output_url <- ""
+  } else if (is.null(config_url)) {
+    output_url <- pkg_url
+  } else {
+    # Remove https, etc. (pkg_url)
+    pkg_url_trimmed <- str_remove(pkg_url, pattern_url_prefix)
+    
+    # String manipulation:
+    # Remove https, etc. (config_url), extract up to first slash, 
+    # remove from pkg_url_trimmed, remove characters after date
+    output_url <- str_remove(config_url, pattern_url_prefix) %>%
+      str_extract(pattern_first_slash) %>%
+      gsub("", pkg_url_trimmed) %>%
+      sub(pattern_after_date, "\\1", .)
+  }
+  
+  return(output_url)
+}
+
+
 # install packages and dependencies
 #' @param pkg Name of package as string
 #' @param library The R library to be used. If NULL, the active project library will be used.
@@ -201,36 +245,54 @@ get_agreed_pkgs <- function(config = get_config()){
 #' @importFrom renv install
 #' @importFrom utils capture.output
 #' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done
+#' @importFrom stringr str_extract str_remove
 try_install <- function(pkg,
                         library = NULL,
                         repos = NULL,
                         check_agreed = FALSE,
                         config = get_config()){
-
+  
   if (check_agreed){
     if (!pkg %in% get_agreed_pkgs(config)){
       cli_alert_warning(paste0("Note: `", pkg, "` is not part of the agreed upon set of packages."))
     }
   }
-
+  
   res <- ""
-  id  <- cli_step_notime(paste0("Installing `", pkg, "`...{res}"))
-
+  id  <- cli_step_notime(paste0("Installing `", pkg, "` ... {res}"))
+  
   success <- tryCatch({
-    p <- capture.output({install(pkg, library = library, repos = repos, prompt = FALSE)})
-    res <- "success"
+    p <- capture.output({
+      install_result <- install(pkg, library = library, repos = repos, prompt = FALSE)
+    })
+    
+    pkg_version <- install_result[[pkg]]$Version
+    pkg_url <- attr(install_result[[pkg]], "url")
+    config_url <- config$rspm_url
+    
+    # Use the modify_url function to determine output_url
+    output_url <- modify_url(pkg_url, config_url)
+    
+    # If output_url is not an empty string add comma
+    if (output_url == "") {
+      output_url_string <- output_url
+    } else {
+      output_url_string <- paste0(", ", output_url) 
+    }
+  
+    res <- paste0("success (version ", pkg_version, output_url_string, ")")
     cli_progress_done(id = id, result = "done")
     pkg
   }, error = function(e){
-    res <- "not available in this snapshot"
+    res <- "installation failed"
     cli_progress_done(id = id, result = "failed")
     quiet_remove(pkg)
     return(NULL)
-  }
-  )
-
+  })
+  
   invisible(success)
 }
+
 
 
 # copy slushy package and install dependencies if needed
@@ -246,7 +308,7 @@ try_install_slushy <- function(slushy_loc,
                                library = NULL){
 
   res <- ""
-  id  <- cli_step_notime(paste0("Installing `slushy`...{res}"))
+  id  <- cli_step_notime(paste0("Installing `slushy`... {res}"))
 
   if (is.null(library)){
     library <- .libPaths()[1]
