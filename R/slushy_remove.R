@@ -7,25 +7,29 @@
 #' @param project The project directory. If NULL, defaults to the nearest parent
 #'   directory that contains an `.Rproj` file relative to the current working directory.
 #' @param restart Restart session after slushy is removed? Defaults to TRUE.
+#' @param keep A character vector specifying the names of files to retain during 
+#'   the cleanup process. By default, "slushy_config.yml" is kept.
 #'
 #' @return This function is called for its side effects.
 #' @export
 #'
 #' @importFrom rstudioapi executeCommand
 #' @importFrom cli cli_alert_success
+#' @importFrom magrittr `%>%`
 #'
 #' @examples
 #' \dontrun{
 #'  slushy_remove()
 #' }
-slushy_remove <- function(project = NULL, restart = TRUE){
-
+slushy_remove <- function(project = NULL, restart = TRUE, keep = "slushy_config.yml"){
+  
   if (is.null(project)){
     project <- proj_root()
   }
-
+  
   # remove standalone files
-  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml")
+  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml") %>%
+    setdiff(keep)
 
   for (f in files){
     f <- file.path(project, f)

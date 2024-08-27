@@ -4,13 +4,16 @@
 \alias{slushy_remove}
 \title{Remove slushy infrastructure from a project.}
 \usage{
-slushy_remove(project = NULL, restart = TRUE)
+slushy_remove(project = NULL, restart = TRUE, keep = "slushy_config.yml")
 }
 \arguments{
 \item{project}{The project directory. If NULL, defaults to the nearest parent
 directory that contains an `.Rproj` file relative to the current working directory.}
 
 \item{restart}{Restart session after slushy is removed? Defaults to TRUE.}
+
+\item{keep}{A character vector specifying the names of files to retain during 
+the cleanup process. By default, "slushy_config.yml" is kept.}
 }
 \value{
 This function is called for its side effects.
