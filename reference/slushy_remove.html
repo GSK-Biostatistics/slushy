@@ -18,7 +18,7 @@ restarting."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slushy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2.9000</span>
       </span>
     </div>
 
@@ -69,7 +69,7 @@ restarting.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_remove</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span>, restart <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slushy_remove</span><span class="op">(</span>project <span class="op">=</span> <span class="cn">NULL</span>, restart <span class="op">=</span> <span class="cn">TRUE</span>, keep <span class="op">=</span> <span class="st">"slushy_config.yml"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,6 +83,11 @@ directory that contains an `.Rproj` file relative to the current working directo
 
 <dt id="arg-restart">restart<a class="anchor" aria-label="anchor" href="#arg-restart"></a></dt>
 <dd><p>Restart session after slushy is removed? Defaults to TRUE.</p></dd>
+
+
+<dt id="arg-keep">keep<a class="anchor" aria-label="anchor" href="#arg-keep"></a></dt>
+<dd><p>A character vector specifying the names of files to retain during
+the cleanup process. By default, "slushy_config.yml" is kept.</p></dd>
 
 </dl></div>
     <div id="value">
