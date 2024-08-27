@@ -15,6 +15,7 @@
 #'
 #' @importFrom rstudioapi executeCommand
 #' @importFrom cli cli_alert_success
+#' @importFrom magrittr `%>%`
 #'
 #' @examples
 #' \dontrun{
@@ -27,7 +28,7 @@ slushy_remove <- function(project = NULL, restart = TRUE, keep = "slushy_config.
   }
   
   # remove standalone files
-  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml") |>
+  files <- c(".renvignore", "renv.lock", "DESCRIPTION", "slushy_config.yml") %>%
     setdiff(keep)
 
   for (f in files){
