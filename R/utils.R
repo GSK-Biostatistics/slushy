@@ -206,27 +206,30 @@ get_agreed_pkgs <- function(config = get_config()){
 #'
 #' @importFrom stringr str_extract str_remove
 modify_url <- function(pkg_url, config_url) {
-  tryCatch({
-    # Define regex patterns
-    pattern_url_prefix <- "^(http://|https://|www\\.)"
-    pattern_first_slash <- "^[^/]+/"
-    pattern_after_date <- "(\\d{4}-\\d{2}-\\d{2}).*"
-    
-    # Remove protocol/subdomain (pkg_url)
+  # Define regex patterns
+  pattern_url_prefix <- "^(http://|https://|www\\.)"
+  pattern_first_slash <- "^[^/]+/"
+  pattern_after_date <- "(\\d{4}-\\d{2}-\\d{2}).*"
+  
+  # Check for null values and modify the URL accordingly
+  if (is.null(pkg_url)) {
+    output_url <- ""
+  } else if (is.null(config_url)) {
+    output_url <- pkg_url
+  } else {
+    # Remove https, etc. (pkg_url)
     pkg_url_trimmed <- str_remove(pkg_url, pattern_url_prefix)
     
-    # Remove protocol/subdomain (config_url), extract up to first slash, 
+    # String manipulation:
+    # Remove https, etc. (config_url), extract up to first slash, 
     # remove from pkg_url_trimmed, remove characters after date
     output_url <- str_remove(config_url, pattern_url_prefix) %>%
       str_extract(pattern_first_slash) %>%
       gsub("", pkg_url_trimmed) %>%
       sub(pattern_after_date, "\\1", .)
-    
-    return(output_url)
-  }, error = function(e) {
-    # In case of an error, return the original pkg_url
-    return(pkg_url)
-  })
+  }
+  
+  return(output_url)
 }
 
 
@@ -270,7 +273,14 @@ try_install <- function(pkg,
     # Use the modify_url function to determine output_url
     output_url <- modify_url(pkg_url, config_url)
     
-    res <- paste0("success (version ", pkg_version, ", ", output_url, ")")
+    # If output_url is not an empty string add comma
+    if (output_url == "") {
+      output_url_string <- output_url
+    } else {
+      output_url_string <- paste0(", ", output_url) 
+    }
+  
+    res <- paste0("success (version ", pkg_version, output_url_string, ")")
     cli_progress_done(id = id, result = "done")
     pkg
   }, error = function(e){
