@@ -7,6 +7,8 @@
 #' @param project The project directory. If NULL, defaults to the nearest parent
 #'   directory that contains an `.Rproj` file relative to the current working directory.
 #' @param restart Restart session after slushy is removed? Defaults to TRUE.
+#' @param keep A character vector specifying the names of files to retain during 
+#'   the cleanup process. By default, "slushy_config.yml" is kept.
 #'
 #' @return This function is called for its side effects.
 #' @export
