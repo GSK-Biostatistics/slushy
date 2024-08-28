@@ -193,19 +193,20 @@ get_agreed_pkgs <- function(config = get_config()){
 # Modify the package URL based on the slushy_config info (helper function)
 #'
 #' This function modifies the URL of the package being installed (`pkg_url`) using 
-#' the config URL (`config_url`). It removes the protocol/subdomain (https, etc.) from 
+#' the repository URL (`repo_url`). It removes the protocol/subdomain (https, etc.) from 
 #' both URLs, then extracts and substitutes specific parts to generate 
 #' the output URL. If the modification process fails, the original 
 #' `pkg_url` is returned.
 #'
 #' @param pkg_url The original package URL as a string.
-#' @param config_url The configuration URL from the Slushy config list as a string.
+#' @param repo_url The repository URL from the slushy configuration file as a string.
 #' @return The modified URL as a string, or the original `pkg_url` if modification fails.
 #'
 #' @noRd
 #'
 #' @importFrom stringr str_extract str_remove
-modify_url <- function(pkg_url, config_url) {
+
+modify_url <- function(pkg_url, repo_url) {
   # Define regex patterns
   pattern_url_prefix <- "^(http://|https://|www\\.)"
   pattern_first_slash <- "^[^/]+/"
@@ -214,16 +215,16 @@ modify_url <- function(pkg_url, config_url) {
   # Check for null values and modify the URL accordingly
   if (is.null(pkg_url)) {
     output_url <- ""
-  } else if (is.null(config_url)) {
+  } else if (is.null(repo_url)) {
     output_url <- pkg_url
   } else {
     # Remove https, etc. (pkg_url)
     pkg_url_trimmed <- str_remove(pkg_url, pattern_url_prefix)
     
     # String manipulation:
-    # Remove https, etc. (config_url), extract up to first slash, 
+    # Remove https, etc. (repo_url), extract up to first slash, 
     # remove from pkg_url_trimmed, remove characters after date
-    output_url <- str_remove(config_url, pattern_url_prefix) %>%
+    output_url <- str_remove(repo_url, pattern_url_prefix) %>%
       str_extract(pattern_first_slash) %>%
       gsub("", pkg_url_trimmed) %>%
       sub(pattern_after_date, "\\1", .)
@@ -246,6 +247,7 @@ modify_url <- function(pkg_url, config_url) {
 #' @importFrom utils capture.output
 #' @importFrom cli cli_alert_warning cli_progress_step cli_progress_done
 #' @importFrom stringr str_extract str_remove
+
 try_install <- function(pkg,
                         library = NULL,
                         repos = NULL,
@@ -268,10 +270,10 @@ try_install <- function(pkg,
     
     pkg_version <- install_result[[pkg]]$Version
     pkg_url <- attr(install_result[[pkg]], "url")
-    config_url <- config$rspm_url
+    repo_url <- config$rspm_url
     
     # Use the modify_url function to determine output_url
-    output_url <- modify_url(pkg_url, config_url)
+    output_url <- modify_url(pkg_url, repo_url)
     
     # If output_url is not an empty string add comma
     if (output_url == "") {
