@@ -48,35 +48,36 @@ slushy_init <- function(date = NULL,
   if (is.null(project)){
     project <- proj_root()
   }
+  
+  # Check config required params are present -----------------------------------
+  check_config_params(config)
 
-  # force slushy ------------------------------------------------------------
+  # Force slushy ---------------------------------------------------------------
   pkgs <- c(config$pkgs, "slushy") %>% unique()
 
-  # slushy lib path ---------------------------------------------------------
+  # Define slushy lib path -----------------------------------------------------
   slushy_loc <- .getNamespaceInfo(asNamespace("slushy"), "path")
 
-  # Confirm env is clean ----------------------------------------------------
+  # Confirm env is clean -------------------------------------------------------
   confirm_clean_env()
 
-  # get the env settings from config ----------------------------------------
+  # Get the env settings from config -------------------------------------------
   env_settings <- config$environment
 
-  # Evaluate env settings -----------------------------------------------------------
+  # Evaluate env settings ------------------------------------------------------
   if (!is.null(env_settings)){
     env_settings <- lapply(env_settings, function(x) eval(parse(text = x)))
     do.call("Sys.setenv", env_settings)
   }
 
-  # Clean out slushy things from the Rprofile, if applicable -----------------
+  # Clean out slushy things from the Rprofile, if applicable -------------------
   clean_rprofile(project = project,
                  remove_empty = TRUE)
   
-
-  # update ignores ----------------------------------------------------------
+  # Update ignores -------------------------------------------------------------
   update_ignores(project = project)
 
-
-  # Initialize new renv project w/ snapshot date ----------------------------
+  # Initialize new renv project w/ snapshot date -------------------------------
   config_date <- config$date
   date <- date %||% config_date 
   repos <- get_repos(date,
@@ -84,11 +85,11 @@ slushy_init <- function(date = NULL,
 
   options("repos" = repos)
   
-  # create empty DESCRIPTION just listing {slushy} as an Import --------------------
+  # Create empty DESCRIPTION just listing {slushy} as an Import ----------------
   document_pkgs(pkgs = "slushy",
                 project = project)
   
-  # initialize 
+  # Initialize 
   settings <- c(list(snapshot.type = "explicit"), config$renv_settings)
   settings <- settings[!duplicated(names(settings))] 
   init(
@@ -104,30 +105,30 @@ slushy_init <- function(date = NULL,
                            config)
 
 
-  # copy slushy pkg to project directory if not there -------------------
+  # Copy slushy pkg to project directory if not there --------------------------
   try_install_slushy(slushy_loc)
 
-  # Create lock file from DESCRIPTION --------------------------------------
+  # Create lock file from DESCRIPTION ------------------------------------------
   update_snapshot(repos = repos,
                   project = project,
                   force = TRUE)
 
 
-  # clean the project library to ensure we are starting fresh ----------------
+  # Clean the project library to ensure we are starting fresh ------------------
   quiet_restore <- quietly(restore)(project = project,
                                     clean = TRUE,
                                     prompt = FALSE)
 
-  # Document needed pkgs in DESCRIPTION ---------------------------------------------
+  # Document needed pkgs in DESCRIPTION ----------------------------------------
   document_pkgs(pkgs,
                 project = project)
 
-  # Install necessary packages ----------------------------------------------
+  # Install necessary packages -------------------------------------------------
   for(pkg in setdiff(pkgs, "slushy")){
     try_install(pkg, repos = repos, check_agreed = TRUE, config = config)
   }
 
-  # Look for dependencies of slushy that may be missing --------------------
+  # Look for dependencies of slushy that may be missing ------------------------
   slushy_deps_missing <- setdiff(
     package_dependencies("slushy",
                          db = installed.packages(),
@@ -141,12 +142,11 @@ slushy_init <- function(date = NULL,
     }
   }
 
-  # Create updated lock file ----------------------------------------------
+  # Create updated lock file ---------------------------------------------------
   update_snapshot(repos = repos,
                   project = project)
 
-
-  # restart R session
+  # Restart R session ----------------------------------------------------------
   if (restart){
     return(invisible(getOption("restart")()))
   } else {

@@ -58,3 +58,23 @@ new_config <- function(config = NULL, path = getwd()){
   }
 
 }
+
+
+#' Check that required config parameters are present
+#' @return Error message if required parameters are absent
+#' @noRd
+check_config_params <- function(config) {
+  # List of required parameters to check
+  required_params <- c("rspm_url", "pkg_deps_ok")
+  
+  # Check for missing or empty parameters
+  missing_params <- required_params[sapply(required_params, function(param) {
+    is.null(config[[param]]) || length(config[[param]]) == 0
+  })]
+  
+  # If there are any missing or empty parameters, stop the function
+  if (length(missing_params) > 0) {
+    stop(paste("The following parameters are missing or empty in config file:\n ", paste(missing_params, collapse = ", ")))
+  }
+}
+
