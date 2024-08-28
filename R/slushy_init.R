@@ -48,6 +48,9 @@ slushy_init <- function(date = NULL,
   if (is.null(project)){
     project <- proj_root()
   }
+  
+  # Check config required params are present --------------------------------
+  check_config_params(config)
 
   # force slushy ------------------------------------------------------------
   pkgs <- c(config$pkgs, "slushy") %>% unique()
