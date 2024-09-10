@@ -36,7 +36,7 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
   used_pkgs <- renv::dependencies(root = project, progress = FALSE) %>%
     as_tibble() %>% 
     filter(!str_detect(Source, regex("\\.Rprofile$", ignore_case = TRUE)) &
-           !str_detect(Source, regex("DESCRIPTION$", ignore_case = TRUE))) %>% # exclude lock file?
+             !str_detect(Source, regex("DESCRIPTION$", ignore_case = TRUE))) %>%
     pull(Package) %>%
     unique()
   
@@ -56,14 +56,31 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
   
   # Notify user about packages to be trimmed
   if (length(pkgs_to_drop) > 0) {
-    cli_alert_info(paste("The following packages are not used and will be removed:\n",
-                         paste(pkgs_to_drop, collapse = ", ")))
+    cli_alert_info(paste("The following packages are not used and will be removed:\n\n",
+                         paste(pkgs_to_drop, collapse = ", "), "\n\n"))
     
-    # Drop unused packages
-    slushy_drop(pkgs_to_drop)
+    # Ask user if they want to proceed
+    cat("Would you like to proceed? \n1. Proceed \n2. Cancel \nSelection: ")
     
-    # Notify user of successful trimming
-    cli_alert_success("Trimming complete!")
+    # Flush output to make sure prompt is shown before reading input
+    flush.console()
+    
+    # Wait for user input
+    choice <- readline()
+    
+    ## Choice 1
+    if (choice == "1") {
+      # Drop unused packages
+      slushy_drop(pkgs_to_drop)
+      
+      # Notify user of successful trimming
+      cli_alert_success("Trimming complete!")
+      
+    ## Choice 2
+    } else if (choice == "2") {
+      # Notify user of operation cancel
+      stop("Trimming operation cancelled.")
+    }
     
   } else {
     cli_alert_info("No packages need to be trimmed.")
