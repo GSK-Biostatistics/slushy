@@ -1,4 +1,6 @@
 url: https://gsk-biostatistics.github.io/slushy/
+template:
+  bootstrap: 5
 articles:
 - title: Initialize & Maintain Environment
   navbar: Initialize & Maintain Environment
@@ -22,6 +24,7 @@ reference:
     - slushy_update
     - slushy_update_preview
     - slushy_remove
+    - slushy_trim
   - title: Daily Use
     contents:
     - slushy_status
