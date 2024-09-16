@@ -44,7 +44,7 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
   # List of dependencies of packages used
   used_pkgs_deps <- package_dependencies(packages = used_pkgs,
                                          db = installed.packages(),
-                                         which = c("Depends", "Imports"),
+                                         which = c("Depends", "Imports", "LinkingTo"),
                                          recursive = FALSE) %>%
     unlist() %>%
     unique()
