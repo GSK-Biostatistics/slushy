@@ -12,9 +12,9 @@
 #'
 #' @export
 #'
-#' @importFrom renv dependencies snapshot paths
-#' @importFrom desc desc_del_deps desc_get_deps desc_set_deps
-#' @importFrom dplyr as_tibble filter pull
+#' @importFrom renv dependencies
+#' @importFrom desc desc_get_deps
+#' @importFrom dplyr as_tibble filter pull setdiff intersect
 #' @importFrom cli cli_alert_info cli_alert_warning cli_alert_success
 #' @importFrom tools package_dependencies
 #' @importFrom magrittr `%>%`
@@ -34,7 +34,7 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
   proj_library_pkgs <- rownames(installed.packages(paths$library())) %>% unique()
   
   # List of packages used in code files (excluding ones in Rprofile/DESCRIPTION)
-  used_pkgs <- renv::dependencies(root = project, progress = FALSE) %>%
+  used_pkgs <- dependencies(root = project, progress = FALSE) %>%
     as_tibble() %>% 
     filter(!str_detect(Source, regex("\\.Rprofile$", ignore_case = TRUE)) &
              !str_detect(Source, regex("DESCRIPTION$", ignore_case = TRUE)) &
@@ -50,16 +50,23 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
     unlist() %>%
     unique()
   
+  # List of packages in the DESCRIPTION file
+  desc_file <- file.path(project, "DESCRIPTION")
+  desc_pkgs <- desc_get_deps(file = desc_file)$package
+  
   # Keep packages that are used and their dependencies 
   pkgs_to_keep <- append(used_pkgs, used_pkgs_deps) %>% unique()
   
   # Drop packages not in the keep list
   pkgs_to_drop <- setdiff(proj_library_pkgs, pkgs_to_keep)
   
+  # List of drop packages that are top-level only (in DESCRIPTION file)
+  pkgs_to_drop_top_level <- intersect(desc_pkgs, pkgs_to_drop)
+  
   # Notify user about packages to be trimmed
   if (length(pkgs_to_drop) > 0) {
-    cli_alert_info(paste("The following packages are not used and will be removed:\n\n",
-                         paste(pkgs_to_drop, collapse = ", "), "\n\n"))
+    cli_alert_info(paste("The following packages are not used and will be removed with their dependencies:\n\n",
+                         paste(pkgs_to_drop_top_level, collapse = ", "), "\n\n"))
     
     # Ask user if they want to proceed
     choice <- menu(c("Proceed", "Cancel"), title = "Would you like to proceed?")
