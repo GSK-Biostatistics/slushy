@@ -19,6 +19,7 @@
 #' @importFrom tools package_dependencies
 #' @importFrom magrittr `%>%`
 #' @importFrom stringr str_detect regex
+#' @importFrom utils menu
 #'
 slushy_trim <- function(project = NULL, config = get_config(config_file = "slushy_config.yml")) {
   
@@ -61,24 +62,18 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
                          paste(pkgs_to_drop, collapse = ", "), "\n\n"))
     
     # Ask user if they want to proceed
-    cat("Would you like to proceed? \n1. Proceed \n2. Cancel \nSelection: ")
-    
-    # Flush output to make sure prompt is shown before reading input
-    flush.console()
-    
-    # Wait for user input
-    choice <- readline()
+    choice <- menu(c("Proceed", "Cancel"), title = "Would you like to proceed?")
     
     ## Choice 1
-    if (choice == "1") {
+    if (choice == 1) {
       # Drop unused packages
       slushy_drop(pkgs_to_drop)
       
       # Notify user of successful trimming
       cli_alert_success("Trimming complete!")
       
-    ## Choice 2
-    } else if (choice == "2") {
+      ## Choice 2
+    } else if (choice == 2) {
       # Notify user of operation cancel
       stop("Trimming operation cancelled.")
     }
