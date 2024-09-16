@@ -36,7 +36,8 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
   used_pkgs <- renv::dependencies(root = project, progress = FALSE) %>%
     as_tibble() %>% 
     filter(!str_detect(Source, regex("\\.Rprofile$", ignore_case = TRUE)) &
-             !str_detect(Source, regex("DESCRIPTION$", ignore_case = TRUE))) %>%
+             !str_detect(Source, regex("DESCRIPTION$", ignore_case = TRUE)) &
+             !str_detect(Source, regex("renv.lock", ignore_case = TRUE)) ) %>%
     pull(Package) %>%
     unique()
   
