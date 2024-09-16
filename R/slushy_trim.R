@@ -80,8 +80,6 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
     
   } else {
     cli_alert_info("No packages need to be trimmed.")
-    
-    return(invisible(NULL))
   }
   
   invisible(NULL)
