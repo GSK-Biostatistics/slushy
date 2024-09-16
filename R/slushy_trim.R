@@ -67,7 +67,7 @@ slushy_trim <- function(project = NULL, config = get_config(config_file = "slush
     ## Choice 1
     if (choice == 1) {
       # Drop unused packages
-      slushy_drop(pkgs_to_drop)
+      slushy_drop(pkgs_to_drop, restart = FALSE)
       
       # Notify user of successful trimming
       cli_alert_success("Trimming complete!")
