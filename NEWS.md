@@ -1,5 +1,6 @@
 # slushy development 0.5.2.9000
 - Add a `keep` parameter to the `slushy_remove()` function, allowing users to specify files that should not be removed during the cleanup process. The default value is `"slushy_config.yml"`.
+- Add new function `slushy_trim` to remove any unused agreed-upon packages from the project.
 
 # slushy 0.5.2
 - Explicitly pass repos to `renv::install` for `slushy_add`
