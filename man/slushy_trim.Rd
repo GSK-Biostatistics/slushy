@@ -22,3 +22,14 @@ used in the code files of the project. Unused packages will be removed from
 the DESCRIPTION file, uninstalled from the project library, and removed from 
 the `renv.lock` file.
 }
+\examples{
+\dontrun{
+
+ # default
+ slushy_trim()
+
+ # pass options
+ slushy_trim(config = get_config("slushy_config.yml"))
+}
+
+}

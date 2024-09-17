@@ -20,7 +20,17 @@
 #' @importFrom magrittr `%>%`
 #' @importFrom stringr str_detect regex
 #' @importFrom utils menu
+#' 
+#' @examples
+#' \dontrun{
 #'
+#'  # default
+#'  slushy_trim()
+#'
+#'  # pass options
+#'  slushy_trim(config = get_config("slushy_config.yml"))
+#' }
+#' 
 slushy_trim <- function(project = NULL, config = get_config(config_file = "slushy_config.yml")) {
   
   if (is.null(project)) {
