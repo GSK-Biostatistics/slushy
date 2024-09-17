@@ -5,7 +5,7 @@ articles:
   config: config.html
   maintain_env: maintain_env.html
   use_env: use_env.html
-last_built: 2024-09-17T17:20Z
+last_built: 2024-09-17T20:01Z
 urls:
   reference: https://gsk-biostatistics.github.io/slushy/reference
   article: https://gsk-biostatistics.github.io/slushy/articles
