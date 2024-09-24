@@ -160,11 +160,18 @@ add_slushy_rprofile_code <- function(project = proj_root(),
 #' - R packages being used in the project are not accidentally overlooked
 #' - Custom configuration files (if provided) are added to the list of files that should not be ignored.
 #' 
-#' @param project location of project
-#' @param additional_unignore_files A character vector of additional file names to be unignored (i.e., prepended with an exclamation mark in .gitignore). Defaults to NULL.
+#' @param project Location of project
+#' @param additional_unignore_files A character vector of additional file names to be unignored. Defaults to NULL.
 #' 
 #' @noRd
 update_ignores <- function(project = proj_root(), additional_unignore_files = NULL){
+  
+  # Prepend '!' to all additional_unignore_files
+  unignore_files <- if (!is.null(additional_unignore_files)) {
+    paste0("!", additional_unignore_files)
+  } else {
+    NULL
+  }
   
   # add slushy files to gitignore
   git_ignore_file <- file.path(project, ".gitignore")
@@ -173,11 +180,9 @@ update_ignores <- function(project = proj_root(), additional_unignore_files = NU
                   "!.renvignore",
                   "!renv",
                   "!renv.lock",
-                  "!*.Rproj")
+                  "!*.Rproj",
+                  unignore_files)
   
-  if (!is.null(additional_unignore_files)) {
-    renv_files <- c(renv_files, additional_unignore_files)
-  }
   
   if (file.exists(git_ignore_file)){
     git_ignore <- readLines(git_ignore_file, warn = FALSE)
