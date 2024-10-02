@@ -4,7 +4,7 @@ test_that("update_ignores modifies .gitignore correctly", {
   
   # create a temp .gitignore
   gitignore_path <- file.path(temp_dir, ".gitignore")
-  writeLines(c("existing_file.txt"), gitignore_path)  # initial content
+  writeLines(c(".Rproj.user", ".Rhistory", ".RData", ".Ruserdata"), gitignore_path)  # initial content
   
   # create a temp config file
   temp_config_file <- tempfile(fileext = ".yml")
@@ -23,20 +23,22 @@ test_that("update_ignores modifies .gitignore correctly", {
   updated_gitignore <- readLines(gitignore_path, warn = FALSE)
   
   # expected renv_files including the temp config file unignored
-  renv_files <- c("!DESCRIPTION",
+  renv_files <- c(".Rproj.user",
+                  ".Rhistory",
+                  ".RData",
+                  ".Ruserdata",
+                  "!DESCRIPTION",
                   "!.Rprofile",
                   "!.renvignore",
                   "!renv",
                   "!renv.lock",
                   "!*.Rproj",
-                  "existing_file.txt",
                   paste0("!", basename(temp_config_file)))
   
   # check if the updated .gitignore matches the expected renv_files
   expect_equal(sort(updated_gitignore), sort(renv_files))
   
-  # clean up temp config file
+  # clean up
   unlink(temp_config_file)
+  unlink(temp_dir)
 })
-
-# test when gitignore has contents
