@@ -17,7 +17,8 @@ get_config <- function(config_file = "slushy_config.yml"){
   config_list <- get(value = config, config = "default", file = config_file)
   
   # attach the file name as an attribute
-  attr(config_list, "config_file_name") <- config_file
+  structure(config_list,
+                 config_file_name = config_file)
   
   # return the configuration list with the attached attribute
   return(config_list)
