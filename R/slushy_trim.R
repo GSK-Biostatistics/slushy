@@ -31,7 +31,7 @@
 #'  slushy_trim(config = get_config("slushy_config.yml"))
 #' }
 #' 
-slushy_trim <- function(project = NULL, config = get_config(config_file = "slushy_config.yml")) {
+slushy_trim <- function(project = NULL, config = get_config()) {
   
   if (is.null(project)) {
     project <- proj_root()

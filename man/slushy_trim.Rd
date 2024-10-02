@@ -4,10 +4,7 @@
 \alias{slushy_trim}
 \title{Trim installed packages}
 \usage{
-slushy_trim(
-  project = NULL,
-  config = get_config(config_file = "slushy_config.yml")
-)
+slushy_trim(project = NULL, config = get_config())
 }
 \arguments{
 \item{project}{The project directory. If NULL, defaults to the nearest parent

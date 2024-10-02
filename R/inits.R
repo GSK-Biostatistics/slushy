@@ -158,11 +158,20 @@ add_slushy_rprofile_code <- function(project = proj_root(),
 #' Makes modifications to the .gitignore and .renvignore files to ensure the following:
 #' - critical files related to slushy are not accidentally ignored by git
 #' - R packages being used in the project are not accidentally overlooked
+#' - Custom configuration files (if provided) are added to the list of files that should not be ignored.
 #' 
-#' @param project location of project
+#' @param project Location of project
+#' @param additional_unignore_files A character vector of additional file names to be unignored. Defaults to NULL.
 #' 
 #' @noRd
-update_ignores <- function(project = proj_root()){
+update_ignores <- function(project = proj_root(), additional_unignore_files = NULL){
+  
+  # Prepend '!' to all additional_unignore_files
+  unignore_files <- if (!is.null(additional_unignore_files)) {
+    paste0("!", additional_unignore_files)
+  } else {
+    NULL
+  }
   
   # add slushy files to gitignore
   git_ignore_file <- file.path(project, ".gitignore")
@@ -171,7 +180,9 @@ update_ignores <- function(project = proj_root()){
                   "!.renvignore",
                   "!renv",
                   "!renv.lock",
-                  "!*.Rproj")
+                  "!*.Rproj",
+                  unignore_files)
+  
   
   if (file.exists(git_ignore_file)){
     git_ignore <- readLines(git_ignore_file, warn = FALSE)
