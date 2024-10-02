@@ -12,7 +12,7 @@ get_config <- function(config_file = "slushy_config.yml"){
   }
 
   # get name of default config
-  config <- config::get(value = "config_name", config = "default", file = config_file)
+  config <- get(value = "config_name", config = "default", file = config_file)
 
   config_list <- config::get(value = config, config = "default", file = config_file)
   
