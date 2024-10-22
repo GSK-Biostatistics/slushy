@@ -1,3 +1,8 @@
+# slushy development 0.5.2.9001
+- Add user-supplied configuration file to be in the `gitignore` file
+- Configuration file is passed to `additional_unignore_files` in `update_ignores()` and appended to list of files to unignore
+- Add tests for `get_config()` and `update_ignores()`
+
 # slushy development 0.5.2.9000
 - Add a `keep` parameter to the `slushy_remove()` function, allowing users to specify files that should not be removed during the cleanup process. The default value is `"slushy_config.yml"`.
 
