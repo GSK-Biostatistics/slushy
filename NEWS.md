@@ -1,4 +1,4 @@
-# slushy development 0.5.2.9001
+# slushy development version
 - Add user-supplied configuration file to be 'unignored' in the `gitignore` file
 
 # slushy development 0.5.2.9000
