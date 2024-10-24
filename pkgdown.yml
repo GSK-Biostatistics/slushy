@@ -1,11 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.1.0
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   config: config.html
   maintain_env: maintain_env.html
   use_env: use_env.html
-last_built: 2024-09-17T20:01Z
+last_built: 2024-10-24T13:19Z
 urls:
   reference: https://gsk-biostatistics.github.io/slushy/reference
   article: https://gsk-biostatistics.github.io/slushy/articles
