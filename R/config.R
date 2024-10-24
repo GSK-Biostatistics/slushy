@@ -20,7 +20,6 @@ get_config <- function(config_file = "slushy_config.yml"){
   structure(config_list,
                  config_file_name = config_file)
   
-  # return the configuration list with the attached attribute
 }
 
 #' Create a new slushy_config.yml from template in project directory
