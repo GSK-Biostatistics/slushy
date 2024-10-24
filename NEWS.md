@@ -1,4 +1,6 @@
-# slushy development 0.5.2.9000
+# slushy development version
+- Add user-supplied configuration file to be 'unignored' in the `gitignore` file
+
 - Add a `keep` parameter to the `slushy_remove()` function, allowing users to specify files that should not be removed during the cleanup process. The default value is `"slushy_config.yml"`.
 - Add new function `slushy_trim` to remove any unused agreed-upon packages from the project.
 

@@ -75,8 +75,9 @@ slushy_init <- function(date = NULL,
                  remove_empty = TRUE)
   
   # Update ignores -------------------------------------------------------------
-  update_ignores(project = project)
-
+  config_file_name <- attr(config, "config_file_name")
+  update_ignores(project = project, additional_unignore_files = config_file_name)
+  
   # Initialize new renv project w/ snapshot date -------------------------------
   config_date <- config$date
   date <- date %||% config_date 
