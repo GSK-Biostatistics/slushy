@@ -230,15 +230,18 @@ slushy_log <- function(project = NULL, config = get_config(), custom = FALSE) {
 #' If `Requirements` is present, it collapses multiple entries into a single comma-separated string.
 #'
 #' @examples
+#' \dontrun{
 #' example_list <- list(
 #'   list(Package = "dplyr", Version = "1.0.10", Source = "CRAN", Repository = "https://cran.r-project.org"),
 #'   list(Package = "ggplot2", Version = "3.4.0", Source = "CRAN", Repository = "https://cran.r-project.org", Requirements = c("grid", "scales"))
 #' )
 #' 
 #' lst_to_df(example_list)
+#' }
 #'
+#' @importFrom rlang %||%
 #' @keywords internal
-
+#' 
 lst_to_df <- function(lst) {
   # Check if the input is a list
   if (!is.list(lst)) stop("Input must be a list")
