@@ -50,7 +50,8 @@ confirm_clean_env <- function(){
       "Autoloads",
       "package:base",
       "package:slushy",
-      "tools:callr"
+      "tools:callr",
+      "tools:vscode"
     )
   )
 
