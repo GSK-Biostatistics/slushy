@@ -25,6 +25,7 @@ reference:
     - slushy_update_preview
     - slushy_remove
     - slushy_trim
+    - slushy_log
   - title: Daily Use
     contents:
     - slushy_status
