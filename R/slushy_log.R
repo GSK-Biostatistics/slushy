@@ -27,10 +27,10 @@
 #' @examples
 #' \dontrun{
 #' # Generate a summarized package diagnostic report
-#' slushy_log(project = "/path/to/project", full_report = FALSE)
+#' slushy_log(config = get_config("slushy_config.yml"), project = "/path/to/project", full_report = FALSE)
 #'
 #' # Generate a full package diagnostic report with `renv::diagnostics`
-#' slushy_log(project = "/path/to/project", full_report = TRUE)
+#' slushy_log(config = get_config("slushy_config.yml"), project = "/path/to/project", full_report = TRUE)
 #' }
 #'
 #' @export
@@ -133,19 +133,22 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
   
   #------------------------------ CONSOLE OUTPUT -------------------------------
   
-  # Generate the slushy log report as a variable
-  
-  summarized_report <- {
-    # Header for Slushy Log Report
-    text <- "Slushy Log Report"
-    line_width <- 90
+  # Helper function for centering text
+  center_align <- function(text, line_width) {
     padding <- line_width - nchar(text)
     left_padding <- floor(padding / 2)
     right_padding <- ceiling(padding / 2)
+    return(paste0(strrep(" ", left_padding), text, strrep(" ", right_padding)))
+  }
+
+  
+  # Generate the slushy log report as a variable
+  summarized_report <- {
     
-    cli_text(strrep("-", line_width))
-    cat_line(paste0(strrep(" ", left_padding), text, strrep(" ", right_padding))) # add cat_line to imports
-    cli_text(strrep("-", line_width))
+    # Header for Slushy Log Report
+    cli_text(strrep("-", 90))
+    cat_line(center_align("Slushy Log Report", 90))
+    cli_text(strrep("-", 90))
     
     # Check locally installed environment matches lock file
     cli_h3("Slushy environment status")
@@ -195,15 +198,9 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     # Full Report: Run diagnostics in addition to summarized report
     
     # Header for renv diagnostics
-    text <- "Renv Diagnostics Report"
-    line_width <- 90
-    padding <- line_width - nchar(text)
-    left_padding <- floor(padding / 2)
-    right_padding <- ceiling(padding / 2)
-    
-    cli_text(strrep("-", line_width))
-    cat_line(paste0(strrep(" ", left_padding), text, strrep(" ", right_padding)))
-    cli_text(strrep("-", line_width))
+    cli_text(strrep("-", 90))
+    cat_line(center_align("Renv Diagnostics Report", 90))
+    cli_text(strrep("-", 90))
     
     cli_text("")
     renv::diagnostics()
@@ -213,6 +210,7 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     
   } else {
     # Summarized Report: Only the slushy log report is generated
+    
     print(summarized_report)
     cli_alert_success("Summarized report generated successfully.")
     
