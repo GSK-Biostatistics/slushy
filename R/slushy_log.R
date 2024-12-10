@@ -1,4 +1,4 @@
-#' @title Summarized Package Environment Diagnostic
+#' @title Create log for slushy environment
 #'
 #' @description
 #' The `slushy_log` function provides an overview of the package environment, 
