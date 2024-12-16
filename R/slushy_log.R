@@ -15,7 +15,7 @@
 #' \itemize{
 #'   \item Synchronization between the local environment and `renv` lockfile.
 #'   \item Alignment of installed packages versus available versions in the CRAN snapshot.
-#'   \item Usage of `DESCRIPTION` packages both used and not used in code.
+#'   \item Usage of agreed upon packages (i.e., those listed in the `DESCRIPTION` file) in code.
 #'   \item Packages added and removed by assessing discrepancies between config and `DESCRIPTION`.
 #'   \item Determine whether used packages are in DESCRIPTION or its dependencies via comparison table, capturing unapproved packages
 #' }
