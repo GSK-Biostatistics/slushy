@@ -16,7 +16,7 @@
 #'   \item Synchronization between the local environment and `renv` lockfile.
 #'   \item Alignment of installed packages versus available versions in the CRAN snapshot.
 #'   \item Usage of agreed upon packages (i.e., those listed in the `DESCRIPTION` file) in code.
-#'   \item Packages added and removed by assessing discrepancies between config and `DESCRIPTION`.
+#'   \item Changes to set of agreed upon packages. The config file is referenced for the original set of agreed upon packages, and the `DESCRIPTION` file is referenced for the current set of agreed upon packages. 
 #'   \item Determine whether used packages are in DESCRIPTION or its dependencies via comparison table, capturing unapproved packages
 #' }
 #'
