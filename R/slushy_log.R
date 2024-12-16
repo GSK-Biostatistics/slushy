@@ -2,9 +2,10 @@
 #'
 #' @description
 #' The `slushy_log` function provides an overview of the package environment, 
-#' including package usage, dependencies, and mismatches in comparison to the set of approved packages and selected snapshot date. It runs 
-#' `renv::diagnostics` by default and can generate a custom report comparing 
-#' library, lockfile, and package usage details.
+#' including package usage, dependencies, and mismatches in comparison to the set 
+#' of approved packages and selected snapshot date. It can generate a custom report 
+#' comparing library, lockfile, and package usage details, with the option to have 
+#' `renv::diagnostics` appended to the output.
 #'
 #' @param project Character. Path to the project directory. Defaults to the root of the project if `NULL`.
 #' @param config List. The configuration object retrieved from `get_config()` that includes the `pkgs` list.
