@@ -173,7 +173,7 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     cli_alert_info("Agreed-upon packages that are being used in code: {length(desc_pkgs_used)}")
     print(desc_pkgs_used)
     
-    cli_h3("DESCRIPTION Packages Not Used")
+    cli_h3("Agreed-Upon Packages Not Used")
     cli_alert_info("Packages in DESCRIPTION that are not being used in code: {length(desc_pkgs_not_used)}")
     print(desc_pkgs_not_used)
     
