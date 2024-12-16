@@ -14,7 +14,7 @@
 #' This function inspects the following aspects of the package environment:
 #' \itemize{
 #'   \item Synchronization between the local environment and `renv` lockfile.
-#'   \item Installed packages versus available versions in the CRAN snapshot.
+#'   \item Alignment of installed packages versus available versions in the CRAN snapshot.
 #'   \item Usage of `DESCRIPTION` packages both used and not used in code.
 #'   \item Packages added and removed by assessing discrepancies between config and `DESCRIPTION`.
 #'   \item Determine whether used packages are in DESCRIPTION or its dependencies via comparison table, capturing unapproved packages
