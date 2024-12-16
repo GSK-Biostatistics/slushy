@@ -188,7 +188,7 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     cli_alert_info("Comparison of used packages to DESCRIPTION and its dependencies:")
     print(used_in_desc_df)
     cli_text("")
-    cli_alert_info("Used Packages that are not in DESCRIPTION nor its dependencies:")
+    cli_alert_info("Used packages that are not in the agreed-upon packages nor their dependencies:")
     print(not_used_in_desc_or_dep)
     
     cli_text("")
