@@ -184,7 +184,7 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     cli_ul(pkgs_removed)
     
     # Unapproved Packages
-    cli_h3("Comparing Used Packages")
+    cli_h3("Detecting Use of Packages Outside the Agreed-Upon Set")
     cli_alert_info("Comparison of used packages to DESCRIPTION and its dependencies:")
     print(used_in_desc_df)
     cli_text("")
