@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The `slushy_log` function provides an overview of the package environment, 
-#' including package usage, dependencies, and mismatches. It runs 
+#' including package usage, dependencies, and mismatches in comparison to the set of approved packages and selected snapshot date. It runs 
 #' `renv::diagnostics` by default and can generate a custom report comparing 
 #' library, lockfile, and package usage details.
 #'
