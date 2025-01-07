@@ -171,26 +171,48 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     
     # Approved Packages
     cli_h3("Agreed-Upon Packages Used")
-    cli_alert_info("Agreed-upon packages that are being used in code: {length(desc_pkgs_used)}")
-    print(desc_pkgs_used)
+    if (length(desc_pkgs_used) == 0) {
+      cli_text("None")
+    } else {
+      cli_alert_info("Agreed-upon packages that are being used in code: {length(desc_pkgs_used)}")
+      print(desc_pkgs_used)
+    }
     
     cli_h3("Agreed-Upon Packages Not Used")
-    cli_alert_info("Agreed-upon packages that are not being used in code: {length(desc_pkgs_not_used)}")
-    print(desc_pkgs_not_used)
+    if (length(desc_pkgs_not_used) == 0) {
+      cli_text("None")
+    } else {
+      cli_alert_info("Agreed-upon packages that are not being used in code: {length(desc_pkgs_not_used)}")
+      print(desc_pkgs_not_used)
+    }
     
     cli_h3("Changes to Agreed-Upon Packages")
-    cli_alert_info("Agreed-upon packages added following slushy initialization: {length(pkgs_added)}")
-    cli_ul(pkgs_added)
-    cli_alert_info("Agreed-upon packages removed following slushy initialization: {length(pkgs_removed)}")
-    cli_ul(pkgs_removed)
+    cli_alert_info("Agreed-upon packages added following slushy initialization:")
+    if (length(pkgs_added) == 0) {
+      cli_text("None")
+    } else {
+      cli_ul(pkgs_added)
+    }
+    cli_alert_info("Agreed-upon packages removed following slushy initialization:")
+    if (length(pkgs_removed) == 0) {
+      cli_text("None")
+    } else {
+      cli_ul(pkgs_removed)
+    }
     
     # Unapproved Packages
     cli_h3("Detecting Use of Packages Outside the Agreed-Upon Set")
     cli_alert_info("Comparison of used packages to DESCRIPTION and its dependencies:")
     print(used_in_desc_df)
     cli_text("")
-    cli_alert_info("Used packages that are not in the agreed-upon packages nor their dependencies:")
-    print(not_used_in_desc_or_dep)
+
+    cli_h3("Used Packages Outside the Agreed-Upon Set")
+    if (length(not_used_in_desc_or_dep) == 0) {
+      cli_text("None")
+    } else {
+      cli_alert_info("Used packages that are not in the agreed-upon packages nor their dependencies:")
+      print(not_used_in_desc_or_dep)
+    }
     
     cli_text("")
   }
