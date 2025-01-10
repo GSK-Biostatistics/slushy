@@ -65,10 +65,6 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
   # List of recommended and optional packages
   rec_op_pkgs <- available_pkgs_df %>% filter(is.na(Priority) != TRUE) %>% pull(Package)
   
-  # CHECK: List of packages in library vs lock file (excluding recommended and option packages)
-  lib_not_lock <- setdiff(library_df_pkgs, lockfile_df_pkgs) %>% setdiff(rec_op_pkgs)
-  lock_not_lib <- setdiff(lockfile_df_pkgs, library_df_pkgs) %>% setdiff(rec_op_pkgs)
-  
   # Installed packages vs available packages (CRAN snapshot)
   inst_vs_avail_df <- left_join(rename(library_df, "version_inst" = "Version") %>% select(Package, version_inst) %>% as_tibble(),
                                 rename(available_pkgs_df,"version_avail" = "Version"),
