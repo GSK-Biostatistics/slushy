@@ -1,9 +1,15 @@
 # slushy development version
-- Add user-supplied configuration file to be 'unignored' in the `gitignore` file
 
-- Add a `keep` parameter to the `slushy_remove()` function, allowing users to specify files that should not be removed during the cleanup process. The default value is `"slushy_config.yml"`.
-- Add new function `slushy_trim` to remove any unused agreed-upon packages from the project.
-- Add new function `slushy_log` to provide a package environment overview, run diagnostics, and check installed vs required packages.
+New features:
+
+  - Add a `keep` parameter to the `slushy_remove()` function, allowing users to specify files that should not be removed during the cleanup process. The default value is `"slushy_config.yml"`.
+  - Add new function `slushy_trim` to remove any unused agreed-upon packages from the project.
+  - Add new function `slushy_log` to provide a package environment overview, run diagnostics, and check installed vs required packages.
+
+Improvements:
+  
+  - Add user-supplied configuration file to be 'unignored' in the `gitignore` file
+  - Allow vscode to pass check that environment is clean 
 
 # slushy 0.5.2
 - Explicitly pass repos to `renv::install` for `slushy_add`
