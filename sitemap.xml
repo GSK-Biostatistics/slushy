@@ -10,10 +10,12 @@
 <url><loc>https://gsk-biostatistics.github.io/slushy/news/index.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/get_config.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/index.html</loc></url>
+<url><loc>https://gsk-biostatistics.github.io/slushy/reference/lst_to_df.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/new_config.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_add.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_drop.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_init.html</loc></url>
+<url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_log.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_reinit.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_remove.html</loc></url>
 <url><loc>https://gsk-biostatistics.github.io/slushy/reference/slushy_status.html</loc></url>
