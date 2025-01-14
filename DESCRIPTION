@@ -31,7 +31,8 @@ Imports:
     rprojroot,
     rstudioapi,
     yaml,
-    stringr
+    stringr,
+    tibble
 Suggests: 
     knitr,
     rmarkdown,
