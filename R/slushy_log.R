@@ -99,7 +99,7 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     pull(Package) %>% unique() %>% sort()
   
   # List of packages added and removed
-  pkgs_added <- setdiff(desc_pkgs, config_pkgs)
+  pkgs_added <- setdiff(desc_pkgs, config_pkgs) %>% setdiff(c("slushy", "renv"))
   pkgs_removed <- setdiff(config_pkgs, desc_pkgs)
   
   # List of DESCRIPTION package dependencies
@@ -223,13 +223,13 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     cli_text("")
     renv::diagnostics()
     
-    print(summarized_report)
+    cat(summarized_report)
     cli_alert_success("Full report generated successfully.")
     
   } else {
     # Summarized Report: Only the slushy log report is generated
     
-    print(summarized_report)
+    cat(summarized_report)
     cli_alert_success("Summarized report generated successfully.")
     
   }
