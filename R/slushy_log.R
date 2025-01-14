@@ -196,11 +196,6 @@ slushy_log <- function(project = NULL, config = get_config(), full_report = FALS
     }
     
     # Unapproved Packages
-    cli_h3("Detecting Use of Packages Outside the Agreed-Upon Set")
-    cli_alert_info("Comparison of used packages to DESCRIPTION and its dependencies:")
-    print(used_in_desc_df)
-    cli_text("")
-
     cli_h3("Used Packages Outside the Agreed-Upon Set")
     if (length(not_used_in_desc_or_dep) == 0) {
       cli_text("None")
